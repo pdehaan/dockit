@@ -90,7 +90,7 @@ module.exports = function(config) {
         block: content
       };
     } else {
-      noddocco.process(input, ext, config.ctypes, function (err, noddoccoData) {
+      noddocco.process(input, ext, config.ctypes, false, function (err, noddoccoData) {
         blocks[key] = {
           file: file,
           key: key,
