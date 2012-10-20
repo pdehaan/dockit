@@ -11,6 +11,7 @@ body{
 #dockit td{width:50%;}
 #dockit td.comments{font: 1.2em 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;padding: 0 10px 0 40px;}
 #dockit .con {max-width: 800px;padding-bottom: 30px}
+#dockit td.comments code{white-space: pre;}
 
 /* layout */
 
@@ -224,6 +225,5 @@ pre code {
   color: #4d4d4c;
   font-family: Menlo, Monaco, Consolas, monospace;
   line-height: 1.5;
-
   padding: 10px;
 }
