@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="assets/main.css">
+    <script src="assets/libs.js"></script>
+    {!
+    <script src="assets/jquery.js"></script>
+    <script src="assets/scrollspy.js"></script>
+    !}
+    <script src="assets/main.js"></script>
+    <title>{title}</title>
+</head>
+<body>
+
+<div id="container">
+    <div class="docs">
+        <span class="ctrl ctrl-nav" >nav</span>
+        {^md}
+        <span id="ctrl-code" class="ctrl">code</span>
+        {/md}
+        {+content}
+        content goes here
+        {/content}
+    </div>
+</div>
+
+{>nav/}
+
+</body>
+</html>

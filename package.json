@@ -1,0 +1,35 @@
+{
+  "name": "dockit",
+  "description": "automatic documentation generator",
+  "version": "0.0.12",
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "diveSync": "*",
+    "node-html-encoder": "*",
+    "marked": "*",
+    "highlight.js": "*",
+    "dustjs-linkedin": "*",
+    "dustjs-helpers": "*",
+    "ncp": "*",
+    "commander": "*",
+    "noddocco":"*",
+    "json5": "*"
+  },
+  "bin": {
+    "dockit": "bin/dockit"
+  },
+  "devDependencies": {},
+  "repository": "",
+  "keywords": [
+    "dockit",
+    "documentation",
+    "docco",
+    "generate",
+    "automatic",
+    "comments"
+  ],
+  "author": "Matt Hadley",
+  "license": "MIT"
+}

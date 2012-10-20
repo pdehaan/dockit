@@ -1,0 +1,46 @@
+<div id="nav">
+    <span id="ctrl-view-pages" class="ctrl active">pages</span>
+    <span id="ctrl-view-files" class="ctrl">files</span>
+    {?showall}
+    {?all}
+    <a href="index.html"><span id="ctrl-all" class="ctrl active">∞</span></a>
+    {:else}
+    <a href="all.html"><span id="ctrl-all" class="ctrl">∞</span></a>
+    {/all}
+    {/showall}
+
+
+    {!
+    {?sections}
+    <ol id="sections" class="menu">
+    {#sections}
+    <a class="nav-{key}-s{section}" href="#{key}-s{section}">
+        <li class="h{h}">{page}</li>
+    </a>
+    {/sections}
+    </ol>
+    {/sections}
+    !}
+
+    <ol id="files" class="menu hidden">
+    {#files}
+    <a class="nav-{key}" href="{key}.html">
+        <li {@if cond="'{current}'=='{key}'"}class="active"{/if}>
+        <span class="dir">{dir}</span>
+        <span class="file">{file}</span>
+        </li>
+    </a>
+    {/files}
+    </ol>
+
+    {?pages}
+    <ol id="pages" class="menu">
+    {#pages}
+    <a class="nav-{key}-s{section}" href="{?all}all{:else}{key}{/all}.html#{key}-s{section}">
+        <li class="h{h}" >{page}</li>
+    </a>
+    {/pages}
+    </ol>
+    {/pages}
+
+</div>

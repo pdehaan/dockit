@@ -1,0 +1,58 @@
+#!/usr/bin/env node
+
+var program = require('commander'),
+  dockit = require('../'),
+  fs = require('fs'),
+  path = require('path');
+
+// support json5
+require('json5/lib/require');
+
+program
+  .version(require('../package.json').version)
+  .option('-o, --output [dir]', 'output directory for documents')
+  .option('-x, --exlude [paths]', 'exlude paths/files that match')
+  .option('-i, --include [file extensions]', 'array of file extensions to doc')
+  .option('-s, --story [files]', 'array of files to display in order')
+  .option('-p, --project [name]', 'name of project for page title')
+  .option('-h, --hidden', 'use dot files and directories (except .git)')
+  .option('-a, --all', 'create one long page')
+
+
+program.on('--help', function(){
+  console.log('  document files from comments');
+  console.log('  will use .dockit.json for config if available');
+});
+
+program.parse(process.argv);
+
+var config,ignore, include, order, all;
+
+try {
+  config = require(path.join(process.cwd(),'.dockit'));
+} catch (e) {
+  //console.log(e);
+}
+
+if(!config){
+  if (! program.include) {
+      console.log("dockit ERROR: no input files");
+      process.exit(1);
+  }
+}
+
+if(program.exlude) config.ignore = program.exlude.split(',');
+if(program.include) config.include = program.include.split(',');
+if(program.story) config.order = program.story.split(',');
+if(program.all) config.all = true;
+if(program.project) config.project = program.project;
+if(program.hidden) config.hidden = true;
+if(config.order){
+  config.order = config.order.map(function(o){
+    return o.replace(/\//g, "_").replace(/\./g, "_").toLowerCase()
+  })
+}
+config.output = program.output || 'docs';
+
+//console.log(config);
+dockit(config);

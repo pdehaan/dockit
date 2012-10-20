@@ -1,0 +1,25 @@
+{>layout/}
+{<content}
+<table id="dockit">
+{#data}
+{?md}
+<tr>
+    <td class="comments">
+        <div class="con">{block|s}</div>
+    </td>
+</tr>
+{:else}
+{#blocks}
+<tr id="{key}-s{section}" class="section">
+    <td class="comments">
+        <div class="con">{comments|s}</div>
+    </td>
+    <td class="code">
+        <div class="con"><pre><code>{code|s}</pre></code></div>
+    </td>
+</tr>
+{/blocks}
+{/md}
+{/data}
+</table>
+{/content}

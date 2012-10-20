@@ -1,0 +1,21 @@
+// json5 config
+{
+  "ignore": [
+    "node_modules",
+    "docs",
+    "templates",
+    "vendor",
+    "assets"
+  ],
+  "include": [
+    "js",
+    "md"
+  ],
+  "order": [
+    "readme.md",
+    "ndocco.js",
+    "index.js"
+  ],
+  "all" : true,
+  "ctypes": ["SLASH"]
+}
