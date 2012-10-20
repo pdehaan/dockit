@@ -6,11 +6,13 @@ function setScrollspy(){
     //   offset = 0;
     // }
     //console.log(position);
-    console.log('min: ' + (position.top-offset) + ' / max: ' + parseInt(position.top + $(this).height()));
+    //console.log('min: ' + (position.top-offset) + ' / max: ' + parseInt(position.top + $(this).height()));
     $(this).scrollspy({
       min: (position.top-offset),
       max: position.top + $(this).height() -offset,
       onEnter: function(element, position) {
+        //console.log('.nav-'+element.id+' li');
+        //console.log('.nav-'+(element.id.slice(0, element.id.lastIndexOf('-')))+' li')
         $('.nav-'+element.id+' li').toggleClass('active');
         $('.nav-'+(element.id.slice(0, element.id.lastIndexOf('-')))+' li').toggleClass('active');
       },
@@ -30,8 +32,7 @@ $(document).ready(function() {
   $('#ctrl-code').bind('click', function() {
     $('#dockit td:nth-child(2)').toggleClass('hidden');
     $(window).unbind('scroll');
-    $('#sections li').removeClass('active');
-    $('#pages li').removeClass('active');
+    $('.menu li').removeClass('active');
     setScrollspy();
   });
 
