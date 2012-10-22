@@ -57,7 +57,7 @@ module.exports = function(config) {
     if (err) throw err;
     ext = path.extname(file).slice(1);
     input = fs.readFileSync(file, 'utf8');
-    key = path.relative(process.cwd(), file).replace(/\//g, "_").replace(/\./g, "_").toLowerCase();
+    key = path.relative(process.cwd(), file).replace(/\//g, ":").replace(/\./g, ":").toLowerCase();
     dir = path.dirname(path.relative(process.cwd(), file)).toLowerCase();
     if (dir === '.') dir = '';
     dir = dir + '/';
@@ -160,7 +160,7 @@ module.exports = function(config) {
       //sections: sections[blocks[i].key],
       data: blocks[i]},
       function(err, output){
-        if(dest == 'readme_md'){
+        if(dest == 'readme:md'){
           fs.writeFileSync(path.join(config.output,'index.html'), output);
         }
         fs.writeFileSync(path.join(config.output, dest + '.html'), output);
