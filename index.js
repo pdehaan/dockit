@@ -127,6 +127,12 @@ module.exports = function(config) {
       for (var j in pages[config.order[i]]){
         displaypages.push(pages[config.order[i]][j]);
       }
+      delete pages[config.order[i]];
+    }
+    for (var i in pages){
+      for (var j in pages[i]){
+        displaypages.push(pages[i][j]);
+      }
     }
   } else {
     for(var i in pages){
