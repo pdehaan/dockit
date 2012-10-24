@@ -9,7 +9,7 @@ body{
 #dockit{background-color:#FFF;border-collapse:collapse;border:0;width:100%;margin:0;padding:0;}
 #dockit td{border:0;vertical-align:top;}
 #dockit td{width:50%;}
-#dockit td.comments{font: 1.2em 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;padding: 0 10px 0 40px;}
+#dockit td.comments{font: 1.1rem 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;padding: 0 20px 0 40px;}
 #dockit .con {max-width: 800px;}
 #dockit td.comments code{white-space: pre; font-size:0.9em}
 

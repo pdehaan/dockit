@@ -143,6 +143,7 @@ module.exports = function(config) {
       delete pages[config.order[i]];
     }
     for (var i in pages){
+      orderedblocks.push(blocks[pages[i][0].key]);
       for (var j in pages[i]){
         displaypages.push(pages[i][j]);
       }
