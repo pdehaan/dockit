@@ -14,7 +14,7 @@
     "dustjs-helpers": "*",
     "ncp": "*",
     "commander": "*",
-    "noddocco":">=0.0.6",
+    "noddocco":">=0.0.8",
     "json5": "*"
   },
   "bin": {
