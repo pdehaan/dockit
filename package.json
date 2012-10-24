@@ -14,8 +14,10 @@
     "dustjs-helpers": "*",
     "ncp": "*",
     "commander": "*",
-    "noddocco":">=0.0.8",
-    "json5": "*"
+    "noddocco":">=0.0.9",
+    "json5": "*",
+    "highlight.js" : "*",
+    "marked" : "*"
   },
   "bin": {
     "dockit": "bin/dockit"

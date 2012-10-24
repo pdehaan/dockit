@@ -11,7 +11,7 @@ body{
 #dockit td{width:50%;}
 #dockit td.comments{font: 1.2em 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;padding: 0 10px 0 40px;}
 #dockit .con {max-width: 800px;}
-#dockit td.comments code{white-space: pre;}
+#dockit td.comments code{white-space: pre; font-size:0.9em}
 
 /* layout */
 

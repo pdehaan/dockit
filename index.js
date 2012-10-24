@@ -4,7 +4,19 @@ var diveSync = require("diveSync"),
     fs = require('fs'),
     dust = require('dustjs-helpers'),
     ncp = require('ncp').ncp,
-    marked = require('marked');
+    marked = require('marked'),
+    hl = require('highlight.js');
+
+marked.setOptions({
+  gfm: true,
+  pedantic: false,
+  sanitize: true,
+  // callback for code highlighter
+  highlight: function(code, lang) {
+    if(lang === undefined) return code;
+    return hl.highlight(lang, code).value;
+  }
+});
 
 // load all dust templates
 var template,
@@ -69,7 +81,8 @@ module.exports = function(config) {
     if(ext == 'md'){
       foundsection = 1;
       var i = 1;
-      page = marked(input).match(/<h([1-3])>(.*)<\/h[1-3]>/gi);
+      input = marked(input);
+      page = input.match(/<h([1-3])>(.*)<\/h[1-3]>/gi);
       for(var j in page){
           sections[key] = sections[key] || [];
           details = {
@@ -82,7 +95,7 @@ module.exports = function(config) {
           pages[key] = pages[key] || [];
             pages[key].push(details);
         }
-      var content = marked(input).replace(/<h([1-3])>(.*)<\/h[1-3]>/gi, anchorize);
+      var content = input.replace(/<h([1-3])>(.*)<\/h[1-3]>/gi, anchorize);
       blocks[key] = {
         md: true,
         file: file,
@@ -145,10 +158,12 @@ module.exports = function(config) {
 
   //console.log(pages);
   //render a page for each block of noddocco data
+  console.log('writing...');
   config.project = config.project || 'dockit generated docs';
-  var all = [];
+  var all = [],
+      dest;
   for (var i in blocks){
-    var dest = blocks[i].key;
+    dest = blocks[i].key;
 
     dust.render('file', {
       md: blocks[i].md,
@@ -164,7 +179,7 @@ module.exports = function(config) {
           fs.writeFileSync(path.join(config.output,'index.html'), output);
         }
         fs.writeFileSync(path.join(config.output, dest + '.html'), output);
-        console.log('writing ' + path.join(config.output, dest));
+        console.log(path.join(config.output, dest));
     })
 
     all.push(blocks[i]);
@@ -172,6 +187,7 @@ module.exports = function(config) {
 
   //console.log(orderedblocks);
   if(config.all) {
+    dest = 'all.html';
     dust.render('file', {
       all: true,
       title: config.project,
@@ -181,10 +197,11 @@ module.exports = function(config) {
       //sections: sections[blocks[i].key],
       data: orderedblocks},
       function(err, output){
-        fs.writeFileSync(path.join(config.output,'all.html'), output);
+        fs.writeFileSync(path.join(config.output, dest), output);
+        console.log(path.join(config.output, dest));
     })
   }
-  console.log('done!');
+  console.log('...done!');
 }
 
 
