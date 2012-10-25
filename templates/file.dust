@@ -7,9 +7,11 @@
     <td class="comments">
         <div class="con">{block|s}</div>
     </td>
+    {?all}
     <td class="code">
         <div class="con"><pre><code></pre></code></div>
     </td>
+    {/all}
 </tr>
 {:else}
 {#blocks}
