@@ -24,8 +24,8 @@ body{
 #dockit td.code{
   border-left: 1px solid #ccc;
   background-color: #f8f8f8;
-
 }
+#dockit {border-bottom: 1px solid #ccc;}
 
 
 /* layout */
