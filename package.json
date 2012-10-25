@@ -1,7 +1,7 @@
 {
   "name": "dockit",
   "description": "automatic documentation generator",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "scripts": {
     "start": "node app"
   },
@@ -14,7 +14,7 @@
     "dustjs-helpers": "*",
     "ncp": "*",
     "commander": "*",
-    "noddocco":">=0.0.10",
+    "noddocco":">=0.0.11",
     "json5": "*",
     "highlight.js" : "*",
     "marked" : "*"

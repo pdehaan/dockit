@@ -10,7 +10,7 @@ var diveSync = require("diveSync"),
 marked.setOptions({
   gfm: true,
   pedantic: false,
-  sanitize: true,
+  sanitize: false,
   // callback for code highlighter
   highlight: function(code, lang) {
     if(lang === undefined) return code;
