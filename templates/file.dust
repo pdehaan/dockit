@@ -1,6 +1,6 @@
 {>layout/}
 {<content}
-<table id="dockit">
+<table id="dockit" {?md}{^all}class="single"{/all}{/md}>
 {#data}
 {?md}
 <tr>

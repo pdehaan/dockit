@@ -20,13 +20,13 @@ body{
   padding: 6px 10px;
   border-radius: 3px;
 }
-#dockit td.comments p code{ padding:2px;}
+#dockit td.comments p code, #dockit td.comments li code{ padding:2px;}
 #dockit td.code{
   border-left: 1px solid #ccc;
   background-color: #f8f8f8;
 }
 #dockit {border-bottom: 1px solid #ccc;}
-
+#dockit.single {border-bottom: 0}
 
 /* layout */
 
