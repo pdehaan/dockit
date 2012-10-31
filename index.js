@@ -34,7 +34,7 @@ for (var i in templates){
 }
 
 var blocks = {}, pages = {}, sections = {}, files = [],
-    dir, target, key, comment, page, details, ext, input, foundsection;
+    dir, target, fileRepo, key, comment, page, details, ext, input, foundsection;
 
 function anchorize(match, p1, p2, offset, string){
   return '<h'+p1+' id="'+key+'-s'+(foundsection++)+'" class="section md">'+p2+'</h'+p1+'>';
@@ -69,7 +69,8 @@ module.exports = function(config) {
     if (err) throw err;
     ext = path.extname(file).slice(1);
     input = fs.readFileSync(file, 'utf8');
-    key = path.relative(process.cwd(), file).replace(/\//g, "_").replace(/\./g, "_").toLowerCase();
+    fileRepo = path.relative(process.cwd(), file);
+    key = fileRepo.replace(/\//g, "_").replace(/\./g, "_").toLowerCase();
     dir = path.dirname(path.relative(process.cwd(), file)).toLowerCase();
     if (dir === '.') dir = '';
     dir = dir + '/';
@@ -99,6 +100,7 @@ module.exports = function(config) {
       blocks[key] = {
         md: true,
         file: file,
+        fileRepo: fileRepo,
         key: key,
         block: content
       };
@@ -106,6 +108,7 @@ module.exports = function(config) {
       noddocco.process(input, ext, config.ctypes, false, function (err, noddoccoData) {
         blocks[key] = {
           file: file,
+          fileRepo: fileRepo,
           key: key,
           blocks: noddoccoData
         };
@@ -162,16 +165,19 @@ module.exports = function(config) {
   console.log('writing...');
   config.project = config.project || 'dockit generated docs';
   var all = [],
-      dest;
+      dest,
+      generated = new Date();
   for (var i in blocks){
     dest = blocks[i].key;
 
     dust.render('file', {
       md: blocks[i].md,
       title: config.project,
+      github: config.github,
       showall: config.all,
       current: blocks[i].key,
       files: files,
+      generated: generated,
       pages: displaypages,
       //sections: sections[blocks[i].key],
       data: blocks[i]},
@@ -192,8 +198,10 @@ module.exports = function(config) {
     dust.render('file', {
       all: true,
       title: config.project,
+      github: config.github,
       showall: config.all,
       files: files,
+      generated: generated,
       pages: displaypages,
       //sections: sections[blocks[i].key],
       data: orderedblocks},

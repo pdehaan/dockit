@@ -43,4 +43,6 @@
     </ol>
     {/pages}
 
+    <p id="generated">generated {generated}</p>
+
 </div>

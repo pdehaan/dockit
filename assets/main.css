@@ -6,12 +6,31 @@ body{
   font: 0.85em Helvetica, arial, freesans, clean, sans-serif;
 }
 
-#dockit{background-color:#FFF;border-collapse:collapse;border:0;width:100%;margin:0;padding:0;}
-#dockit td{border:0;vertical-align:top;}
-#dockit td{width:50%;}
-#dockit td.comments{font: 1.1rem 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;padding: 0 20px 0 40px;}
-#dockit .con {max-width: 800px;}
-#dockit td.comments code{
+#dockit {
+  background-color:#FFF;
+  border-collapse:collapse;
+  border:0;width:100%;margin:0;padding:0;
+}
+
+#dockit td {
+  border:0;
+  vertical-align:top;
+}
+
+#dockit td {
+  width:50%;
+}
+
+#dockit td.comments {
+  font: 1.1rem 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;
+  padding: 0 20px 0 40px;
+}
+
+#dockit .con {
+  max-width: 800px;
+}
+
+#dockit td.comments code {
   background-color: #f8f8f8;
   border: 1px solid #ccc;
   font-size: 13px;
@@ -20,13 +39,23 @@ body{
   padding: 6px 10px;
   border-radius: 3px;
 }
-#dockit td.comments p code, #dockit td.comments li code{ padding:2px;}
-#dockit td.code{
+
+#dockit td.comments p code, #dockit td.comments li code {
+  padding:2px;
+}
+
+#dockit td.code {
   border-left: 1px solid #ccc;
   background-color: #f8f8f8;
 }
-#dockit {border-bottom: 1px solid #ccc;}
-#dockit.single {border-bottom: 0}
+
+#dockit {
+  border-bottom: 1px solid #ccc;
+}
+
+#dockit.single {
+  border-bottom: 0
+}
 
 /* layout */
 
@@ -46,6 +75,7 @@ body{
   overflow-x: hidden;
   border-right: 2px solid #eee;
   padding-top: 2em;
+  padding-bottom: 20px;
 }
 
 .docs {
@@ -124,6 +154,11 @@ span.active, .active {
   font-size: 0.8em;
 }
 
+#generated {
+  padding: 0.3em;
+  font-size: 0.9em;
+  color: #666;
+}
 
 /* control buttons */
 
@@ -192,6 +227,13 @@ a .ctrl {
   display:none
 }
 
+.github {
+  float: right;
+  padding-top: 25px;
+  font-size: 0.8em;
+  text-align:center;
+  color: #666;
+}
 
 
 /* theme */

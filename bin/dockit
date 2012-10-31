@@ -15,6 +15,8 @@ program
   .option('-i, --include [file extensions]', 'array of file extensions to doc')
   .option('-s, --story [files]', 'array of files to display in order')
   .option('-p, --project [name]', 'name of project for page title')
+  .option('-gu, --githuburl [url]', 'url for github repo')
+  .option('-gt, --githubtext [text]', 'text link for github repo, defaults to github')
   .option('-h, --hidden', 'use dot files and directories (except .git)')
   .option('-a, --all', 'create one long page')
 
@@ -46,6 +48,8 @@ if(program.include) config.include = program.include.split(',');
 if(program.story) config.order = program.story.split(',');
 if(program.all) config.all = true;
 if(program.project) config.project = program.project;
+if(program.githuburl) config.github.url = program.githuburl;
+if(program.githubtext) config.github.text = program.githubtext;
 if(program.hidden) config.hidden = true;
 if(config.order){
   config.order = config.order.map(function(o){
@@ -53,6 +57,9 @@ if(config.order){
   })
 }
 config.output = program.output || 'docs';
+config.github = config.github || {};
+if(config.github.url != undefined & config.github.text == undefined){
+  config.github.text = "github";
+}
 
-//console.log(config);
 dockit(config);

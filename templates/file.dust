@@ -1,10 +1,11 @@
 {>layout/}
 {<content}
 <table id="dockit" {?md}{^all}class="single"{/all}{/md}>
-{#data}
+{#data githubUrl=github.url githubText=github.text}
 {?md}
 <tr>
     <td class="comments">
+        {?githubUrl}<a href="{githubUrl|s}/blob/master/{fileRepo}"><span class="github">{githubText}</span></a>{/githubUrl}
         <div class="con">{block|s}</div>
     </td>
     {?all}
@@ -17,6 +18,7 @@
 {#blocks}
 <tr id="{key}-s{section}" class="section">
     <td class="comments">
+        {?githubUrl}{@if cond="'{section}'=='1'"}<a href="{githubUrl|s}/blob/master/{fileRepo}"><span class="github">{githubText}</span></a>{/if}{/githubUrl}
         <div class="con">{comments|s}</div>
     </td>
     <td class="code">
