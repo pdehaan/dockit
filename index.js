@@ -173,6 +173,7 @@ module.exports = function(config) {
     dust.render('file', {
       md: blocks[i].md,
       title: config.project,
+      index: config.index,
       github: config.github,
       showall: config.all,
       current: blocks[i].key,
@@ -198,6 +199,7 @@ module.exports = function(config) {
     dust.render('file', {
       all: true,
       title: config.project,
+      index: config.index,
       github: config.github,
       showall: config.all,
       files: files,

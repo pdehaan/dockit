@@ -3,7 +3,7 @@
     <span id="ctrl-view-files" class="ctrl">files</span>
     {?showall}
     {?all}
-    <a href="index.html"><span id="ctrl-all" class="ctrl active">∞</span></a>
+    <a href="{?index}{index}{:else}index.html{/index}"><span id="ctrl-all" class="ctrl active">∞</span></a>
     {:else}
     <a href="all.html"><span id="ctrl-all" class="ctrl">∞</span></a>
     {/all}
