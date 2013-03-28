@@ -18,6 +18,7 @@ marked.setOptions({
   }
 });
 
+// TODO: replace with duster
 // load all dust templates
 var template,
     templateDir = path.join(__dirname, 'templates'),

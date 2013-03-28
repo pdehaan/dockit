@@ -14,7 +14,7 @@
     "dustjs-helpers": "*",
     "ncp": "*",
     "commander": "*",
-    "noddocco":">=0.0.11",
+    "noddocco":">=0.0.12",
     "json5": "*",
     "highlight.js" : "*",
     "marked" : "*"
