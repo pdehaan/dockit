@@ -1,6 +1,6 @@
 # Dockit
 
-*beta* [docco](http://jashkenas.github.com/docco/) clone
+[docco](http://jashkenas.github.com/docco/) clone
 
 ## Installation
 
