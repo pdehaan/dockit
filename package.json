@@ -1,29 +1,30 @@
 {
   "name": "dockit",
   "description": "automatic documentation generator",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "scripts": {
     "start": "node app"
   },
   "dependencies": {
-    "diveSync": "*",
-    "node-html-encoder": "*",
-    "marked": "*",
-    "highlight.js": "*",
-    "dustjs-linkedin": "*",
-    "dustjs-helpers": "*",
-    "ncp": "*",
-    "commander": "*",
-    "noddocco":">=0.0.12",
-    "json5": "*",
-    "highlight.js" : "*",
-    "marked" : "*"
+    "diveSync": "~0.2.0",
+    "node-html-encoder": "0.0.2",
+    "marked": "~0.2.9",
+    "highlight.js": "~7.3.0",
+    "dustjs-linkedin": "~1.2.5",
+    "dustjs-helpers": "~1.1.1",
+    "ncp": "~0.4.2",
+    "commander": "~1.1.1",
+    "noddocco": "~0.0.14",
+    "json5": "~0.2.0"
   },
   "bin": {
     "dockit": "bin/dockit"
   },
   "devDependencies": {},
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/diffsky/dockit.git"
+  },
   "keywords": [
     "dockit",
     "documentation",
