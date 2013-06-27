@@ -60,6 +60,11 @@ body{
   border-radius: 3px;
 }
 
+#dockit td.comments li ul{
+  padding: 2px;
+  margin: 4px 4px 4px 20px;
+}
+
 #dockit td.comments p code, #dockit td.comments li code {
   padding:2px;
 }
