@@ -10,6 +10,7 @@ require('json5/lib/require');
 
 program
   .version(require('../package.json').version)
+  .option('-c, --config [file]', 'specify location of config file')
   .option('-o, --output [dir]', 'output directory for documents')
   .option('-x, --exlude [paths]', 'exlude paths/files that match')
   .option('-i, --include [file extensions]', 'array of file extensions to doc')
@@ -18,7 +19,7 @@ program
   .option('-gu, --githuburl [url]', 'url for github repo')
   .option('-gt, --githubtext [text]', 'text link for github repo, defaults to github')
   .option('-h, --hidden', 'use dot files and directories (except .git)')
-  .option('-a, --all', 'create one long page')
+  .option('-a, --all', 'create one long page');
 
 
 program.on('--help', function(){
@@ -30,10 +31,17 @@ program.parse(process.argv);
 
 var config,ignore, include, order, all;
 
+if(program.config) {
+  config = path.join(process.cwd(),program.config);
+} else {
+  config = path.join(process.cwd(),'.dockit');
+}
+
 try {
-  config = require(path.join(process.cwd(),'.dockit'));
+  config = require(config);
 } catch (e) {
-  //console.log(e);
+  console.log(e);
+  process.exit(1);
 }
 
 if(!config){
