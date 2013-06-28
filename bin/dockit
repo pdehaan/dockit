@@ -36,6 +36,7 @@ try {
 
 if(!config.files){
   console.log("dockit ERROR: no input files");
+  process.exit(1);
 } else {
   if(config.files instanceof Array){
     config.files = {all : config.files};
