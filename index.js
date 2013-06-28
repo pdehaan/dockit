@@ -60,6 +60,8 @@ module.exports = function(config) {
     });
   }
 
+  console.log(matches);
+
   matches.forEach(function(file){
     ext = path.extname(file).slice(1);
     input = fs.readFileSync(file, 'utf8');
