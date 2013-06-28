@@ -1,11 +1,11 @@
-var diveSync = require("diveSync"),
-    noddocco = require("noddocco"),
+var noddocco = require("noddocco"),
     path = require('path'),
     fs = require('fs'),
     dust = require('dustjs-helpers'),
     ncp = require('ncp').ncp,
     marked = require('marked'),
-    hl = require('highlight.js');
+    hl = require('highlight.js'),
+    expand = require('glob-expand');
 
 marked.setOptions({
   gfm: true,
@@ -13,12 +13,13 @@ marked.setOptions({
   sanitize: false,
   // callback for code highlighter
   highlight: function(code, lang) {
-    if(lang === undefined) return code;
+    if(lang === undefined) {
+      return code;
+    }
     return hl.highlight(lang, code).value;
   }
 });
 
-// TODO: replace with duster
 // load all dust templates
 var template,
     templateDir = path.join(__dirname, 'templates'),
@@ -26,16 +27,15 @@ var template,
 
 for (var i in templates){
   template = templates[i];
-  if(path.extname(template) != '.dust') continue;
+  if(path.extname(template) !== '.dust') {
+    continue;
+  }
   templateName = path.basename(template, '.dust');
-  dust.loadSource(dust.compile(
-    fs.readFileSync(path.join(templateDir, template), 'utf8'),
-    templateName
-  ));
+  dust.loadSource(dust.compile(fs.readFileSync(path.join(templateDir, template), 'utf8'), templateName));
 }
 
 var blocks = {}, pages = {}, sections = {}, files = [],
-    dir, target, fileRepo, key, comment, page, details, ext, input, foundsection;
+    dir, fileRepo, key, comment, page, details, ext, input, foundsection;
 
 function anchorize(match, p1, p2, offset, string){
   return '<h'+p1+' id="'+key+'-s'+(foundsection++)+'" class="section md">'+p2+'</h'+p1+'>';
@@ -43,31 +43,24 @@ function anchorize(match, p1, p2, offset, string){
 
 module.exports = function(config) {
 
-  var opt = {
-    recursive: true,
-    all: config.hidden,
-    directories: false,
-    filter: function filter(node, dir) {
-      if(node.indexOf('.git') != -1) return false;
-      for(var i in config.ignore){
-        if(node.indexOf(config.ignore[i]) != -1) return false;
-      }
-      if(dir) return true;
-      for(var i in config.include){
-        if(path.extname(node).slice(1) == config.include[i]) return true;
-      }
-      return false;
-    }
-  }
-
   // copy over assets
-  if(!fs.existsSync(config.output)) fs.mkdirSync(config.output);
+  if(!fs.existsSync(config.output)) {
+    fs.mkdirSync(config.output);
+  }
   ncp(path.join(__dirname, 'assets'), path.join(config.output, 'assets'), function (err) {
-    if (err) console.log(err);
+    if (err) {
+      console.log(err);
+    }
   });
 
-  diveSync(process.cwd(), opt, function(err, file) {
-    if (err) throw err;
+  var matches = [];
+  for(var section in config.files){
+    expand({filter: 'isFile'}, config.files[section]).forEach(function(f){
+      matches.push(f);
+    });
+  }
+
+  matches.forEach(function(file){
     ext = path.extname(file).slice(1);
     input = fs.readFileSync(file, 'utf8');
     fileRepo = path.relative(process.cwd(), file);
@@ -215,20 +208,3 @@ module.exports = function(config) {
   }
   console.log('...done!');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

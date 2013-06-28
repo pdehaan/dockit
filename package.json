@@ -1,12 +1,11 @@
 {
   "name": "dockit",
   "description": "automatic documentation generator",
-  "version": "0.0.36",
+  "version": "0.1.0",
   "scripts": {
     "start": "node app"
   },
   "dependencies": {
-    "diveSync": "~0.2.0",
     "node-html-encoder": "0.0.2",
     "marked": "~0.2.9",
     "highlight.js": "~7.3.0",
@@ -15,7 +14,8 @@
     "ncp": "~0.4.2",
     "commander": "~1.1.1",
     "noddocco": "~0.0.14",
-    "json5": "~0.2.0"
+    "json5": "~0.2.0",
+    "glob-expand": "0.0.2"
   },
   "bin": {
     "dockit": "bin/dockit"
