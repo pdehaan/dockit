@@ -22,7 +22,7 @@
         <div class="con">{comments|s}</div>
     </td>
     <td class="code">
-        <div class="con"><pre><code>{code|s}</pre></code></div>
+        <div class="con"><pre class="hifile"><code>{code|s}</pre></code></div>
     </td>
 </tr>
 {/blocks}

@@ -1,3 +1,5 @@
+/* jshint loopfunc: true, unused: false */
+
 var noddocco = require("noddocco"),
     path = require('path'),
     fs = require('fs'),
@@ -45,6 +47,7 @@ function anchorize(match, p1, p2, offset, string){
 }
 
 module.exports = function(config) {
+  var opts = {};
 
   // copy over assets
   if(!fs.existsSync(config.output)) {
@@ -69,14 +72,16 @@ module.exports = function(config) {
     fileRepo = path.relative(process.cwd(), file);
     key = fileRepo.replace(/\//g, "_").replace(/\./g, "_").toLowerCase();
     dir = path.dirname(path.relative(process.cwd(), file)).toLowerCase();
-    if (dir === '.') dir = '';
+    if (dir === '.') {
+      dir = '';
+    }
     dir = dir + '/';
     files.push({
       file: path.basename(path.relative(process.cwd(), file)),
       dir: dir,
       key: key
     });
-    if(ext == 'md'){
+    if(ext === 'md'){
       foundsection = 1;
       var i = 1;
       input = marked(input);
@@ -102,7 +107,11 @@ module.exports = function(config) {
         block: content
       };
     } else {
-      noddocco.process(input, ext, config.ctypes, false, function (err, noddoccoData) {
+      opts.ext = ext;
+      opts.ctypes = config.ctypes;
+      opts.encode = false;
+      opts.ignores = config.ignores || {};
+      noddocco.process(input, opts, function (err, noddoccoData) {
         blocks[key] = {
           file: file,
           fileRepo: fileRepo,
@@ -133,27 +142,10 @@ module.exports = function(config) {
   var displaypages = [];
   var orderedblocks = [];
 
-  if (config.order) {
-    //console.log('story mode');
-    for (var i in config.order){
-      orderedblocks.push(blocks[config.order[i]]);
-      for (var j in pages[config.order[i]]){
-        displaypages.push(pages[config.order[i]][j]);
-      }
-      delete pages[config.order[i]];
-    }
-    for (var i in pages){
-      orderedblocks.push(blocks[pages[i][0].key]);
-      for (var j in pages[i]){
-        displaypages.push(pages[i][j]);
-      }
-    }
-  } else {
-    for(var i in pages){
-      orderedblocks.push(blocks[pages[i][0].key]);
-      for (var j in pages[i]){
-        displaypages.push(pages[i][j]);
-      }
+  for(var i in pages){
+    orderedblocks.push(blocks[pages[i][0].key]);
+    for (var j in pages[i]){
+      displaypages.push(pages[i][j]);
     }
   }
 
@@ -164,7 +156,7 @@ module.exports = function(config) {
   var all = [],
       dest,
       generated = new Date();
-  for (var i in blocks){
+  for (i in blocks){
     dest = blocks[i].key;
 
     dust.render('file', {
@@ -180,12 +172,12 @@ module.exports = function(config) {
       //sections: sections[blocks[i].key],
       data: blocks[i]},
       function(err, output){
-        if(dest == 'readme_md'){
+        if(dest === 'readme_md'){
           fs.writeFileSync(path.join(config.output,'index.html'), output);
         }
         fs.writeFileSync(path.join(config.output, dest + '.html'), output);
         console.log(path.join(config.output, dest));
-    })
+    });
 
     all.push(blocks[i]);
   }
@@ -207,7 +199,7 @@ module.exports = function(config) {
       function(err, output){
         fs.writeFileSync(path.join(config.output, dest), output);
         console.log(path.join(config.output, dest));
-    })
+    });
   }
   console.log('...done!');
-}
+};
