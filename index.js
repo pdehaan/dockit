@@ -20,6 +20,9 @@ marked.setOptions({
   }
 });
 
+// preserve whitespace in templates
+dust.optimizers.format = function(ctx, node) {return node;};
+
 // load all dust templates
 var template,
     templateDir = path.join(__dirname, 'templates'),
