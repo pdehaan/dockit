@@ -10,19 +10,19 @@ function setScrollspy(){
     $(this).scrollspy({
       min: (position.top-offset),
       max: position.top + $(this).height() -offset,
-      onEnter: function(element, position) {
+      onEnter: function(element) {
         //console.log('.nav-'+element.id+' li');
         //console.log('.nav-'+(element.id.slice(0, element.id.lastIndexOf('-')))+' li')
         $('.nav-'+element.id+' li').toggleClass('active');
         $('.nav-'+(element.id.slice(0, element.id.lastIndexOf('-')))+' li').toggleClass('active');
       },
-      onLeave: function(element, position) {
+      onLeave: function(element) {
         $('.nav-'+element.id+' li').toggleClass('active');
         $('.nav-'+(element.id.slice(0, element.id.lastIndexOf('-')))+' li').toggleClass('active');
       }
     });
   });
-  // trigger the highlighting
+  // trigger highlighting
   $('body').scrollTop(1);
   $('body').scrollTop(0);
 }
@@ -39,15 +39,15 @@ $(document).ready(function() {
   $('.ctrl-view-pages').bind('click', function() {
     $('.ctrl-view-pages').addClass('active');
     $('.ctrl-view-files').removeClass('active');
-    $('#pages').toggleClass('hidden');
-    $('#files').toggleClass('hidden');
+    $('#pages').removeClass('hidden');
+    $('#files').addClass('hidden');
   });
 
   $('.ctrl-view-files').bind('click', function() {
     $('.ctrl-view-files').addClass('active');
     $('.ctrl-view-pages').removeClass('active');
-    $('#pages').toggleClass('hidden');
-    $('#files').toggleClass('hidden');
+    $('#pages').addClass('hidden');
+    $('#files').removeClass('hidden');
   });
 
 

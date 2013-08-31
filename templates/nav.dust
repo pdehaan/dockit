@@ -11,7 +11,7 @@
     {/showall}
 
 
-    {!
+
     {?sections}
     <ol id="sections" class="menu">
     {#sections}
@@ -21,11 +21,11 @@
     {/sections}
     </ol>
     {/sections}
-    !}
+
 
     <ol id="files" class="menu hidden">
     {#files}
-    <a class="nav-{key}" href="{key}.html">
+    <a class="nav-{key}" href="{key}.html#__file">
         <li {@if cond="'{current}'=='{key}'"}class="active"{/if}>
         <span class="dir">{dir}</span>
         <span class="file">{file}</span>

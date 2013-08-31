@@ -39,7 +39,7 @@ for (var i in templates){
   dust.loadSource(dust.compile(fs.readFileSync(path.join(templateDir, template), 'utf8'), templateName));
 }
 
-var blocks = {}, pages = {}, sections = {}, files = [],
+var blocks = {}, pages = {}, files = [],
     dir, fileRepo, key, comment, page, details, ext, input, foundsection;
 
 function anchorize(match, p1, p2, offset, string){
@@ -87,14 +87,12 @@ module.exports = function(config) {
       input = marked(input);
       page = input.match(/<h([1-3])>(.*)<\/h[1-3]>/gi);
       for(var j in page){
-          sections[key] = sections[key] || [];
           details = {
               page: page[j].match(/<h[1-3]>(.*)<\/h[1-3]>/)[1],
               section: i++,
               h: page[j].match(/<h([1-3])>/)[1],
               key: key
           };
-          sections[key].push(details);
           pages[key] = pages[key] || [];
             pages[key].push(details);
         }
@@ -123,14 +121,12 @@ module.exports = function(config) {
           comment = noddoccoData[i].comments;
           page = comment.match(/<h([1-3])>(.*)<\/h[1-3]>/i);
           if(page) {
-            sections[key] = sections[key] || [];
             details = {
                 page: page[2],
                 section: (+i + 1),
                 h: page[1],
                 key: key
             };
-            sections[key].push(details);
             pages[key] = pages[key] || [];
             pages[key].push(details);
           }
@@ -169,7 +165,6 @@ module.exports = function(config) {
       files: files,
       generated: generated,
       pages: displaypages,
-      //sections: sections[blocks[i].key],
       data: blocks[i]},
       function(err, output){
         if(dest === 'readme_md'){
@@ -194,7 +189,6 @@ module.exports = function(config) {
       files: files,
       generated: generated,
       pages: displaypages,
-      //sections: sections[blocks[i].key],
       data: orderedblocks},
       function(err, output){
         fs.writeFileSync(path.join(config.output, dest), output);
