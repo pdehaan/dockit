@@ -14,10 +14,10 @@
 <body>
 
 <div id="container">
-    <div class="docs">
-        <span class="ctrl ctrl-nav" >nav</span>
+    <div class="docs transformer">
+        <span class="ctrl ctrl-nav transformer" >nav</span>
         {^md}
-        <span id="ctrl-code" class="ctrl">code</span>
+        <span class="ctrl-code ctrl transformer">code</span>
         {/md}
         {+content}
         content goes here

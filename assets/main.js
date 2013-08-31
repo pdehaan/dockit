@@ -29,23 +29,23 @@ function setScrollspy(){
 
 $(document).ready(function() {
 
-  $('#ctrl-code').bind('click', function() {
-    $('#dockit td:nth-child(2)').toggleClass('hidden');
+  $('.ctrl-code').bind('click', function() {
+    $('.dockit td:nth-child(2)').toggleClass('hidden');
     $(window).unbind('scroll');
     $('.menu li').removeClass('active');
     setScrollspy();
   });
 
-  $('#ctrl-view-pages').bind('click', function() {
-    $('#ctrl-view-pages').addClass('active');
-    $('#ctrl-view-files').removeClass('active');
+  $('.ctrl-view-pages').bind('click', function() {
+    $('.ctrl-view-pages').addClass('active');
+    $('.ctrl-view-files').removeClass('active');
     $('#pages').toggleClass('hidden');
     $('#files').toggleClass('hidden');
   });
 
-  $('#ctrl-view-files').bind('click', function() {
-    $('#ctrl-view-files').addClass('active');
-    $('#ctrl-view-pages').removeClass('active');
+  $('.ctrl-view-files').bind('click', function() {
+    $('.ctrl-view-files').addClass('active');
+    $('.ctrl-view-pages').removeClass('active');
     $('#pages').toggleClass('hidden');
     $('#files').toggleClass('hidden');
   });
@@ -62,7 +62,13 @@ $(document).ready(function() {
   });
 
   $('.ctrl-nav').bind('click', function() {
-    $('#nav').toggleClass('hidden');
+    $('.nav').toggleClass('nav-hide');
+
+
+    $('.ctrl-view-pages').toggleClass('ctrl-hide');
+    $('.ctrl-view-files').toggleClass('ctrl-hide');
+    $('.ctrl-all').toggleClass('ctrl-hide');
+
     $('.ctrl-nav').toggleClass('ctrl-nav-closed');
     $('.docs').toggleClass('docs-full');
   });

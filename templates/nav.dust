@@ -1,11 +1,12 @@
-<div id="nav">
-    <span id="ctrl-view-pages" class="ctrl active">pages</span>
-    <span id="ctrl-view-files" class="ctrl">files</span>
+<div class="nav transformer">
+
+    <span class="ctrl-view-pages ctrl active transformer">pages</span>
+    <span class="ctrl-view-files ctrl transformer">files</span>
     {?showall}
     {?all}
-    <a href="{?index}{index}{:else}index.html{/index}"><span id="ctrl-all" class="ctrl active">∞</span></a>
+    <a href="{?index}{index}{:else}index.html{/index}"><span class="ctrl-all ctrl active transformer">∞</span></a>
     {:else}
-    <a href="all.html"><span id="ctrl-all" class="ctrl">∞</span></a>
+    <a href="all.html"><span class="ctrl-all ctrl transformer">∞</span></a>
     {/all}
     {/showall}
 

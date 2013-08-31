@@ -1,6 +1,6 @@
 {>layout/}
 {<content}
-<table id="dockit" {?md}{^all}class="single"{/all}{/md}>
+<table class="dockit{?md}{^all} single{/all}{/md}">
 {#data githubUrl=github.url githubText=github.text}
 {?md}
 <tr>
@@ -21,7 +21,7 @@
         {?githubUrl}{@if cond="'{section}'=='1'"}<a href="{githubUrl|s}/blob/master/{fileRepo}"><span class="github">{githubText}</span></a>{/if}{/githubUrl}
         <div class="con">{comments|s}</div>
     </td>
-    <td class="code">
+    <td class="code transformer">
         <div class="con"><pre class="hifile"><code>{code|s}</pre></code></div>
     </td>
 </tr>
