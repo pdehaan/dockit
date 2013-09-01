@@ -143,13 +143,26 @@ body {
 
 p {
   font-size: 1rem;
-  line-height: 1.3em;
+  line-height: 1.4em;
+  margin-bottom: 0;
+}
+
+.dockit a {
+  color: #80B1CC;
+  font-weight:400;
+  background-color: #F8F8F8;
+  padding: 1px;
+  text-decoration: none;
 }
 
 /* menu */
 
-span.active, .active {
-  background-color: #D8D8D8;
+span.active {
+  background-color: #DFDEE0;
+}
+
+.active {
+  background-color: #EEE;
 }
 
 .menu {
@@ -222,7 +235,7 @@ span.active, .active {
   -moz-border-radius-bottomright: 8px;
   -webkit-border-bottom-right-radius: 8px;
   border-bottom-right-radius: 8px;
-  border: 2px solid #eee;
+  border: 2px solid #EEE;
   border-top: 0;
   cursor: pointer;
   width: 50px;
@@ -251,13 +264,13 @@ a .ctrl {
   width: 24px;
 }
 
-.ctrl-view-pages {
+.ctrl-pages {
   left: 10px;
   padding-left:10px;
   width: 53px;
 }
 
-.ctrl-view-files {
+.ctrl-files {
   left: 140px;
   padding-left:12px;
   width: 40px;
@@ -266,15 +279,6 @@ a .ctrl {
 .ctrl-code {
   left: 90%;
 }
-
-/*.ctrl-nav {
-  height: 25px;
-  top: 80px;
-  left: 199px;
-  width: 55px;
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-}*/
 
 .ctrl-nav {
   display:block;
@@ -288,7 +292,7 @@ a .ctrl {
   -moz-border-radius-bottomright: 8px;
   -webkit-border-bottom-right-radius: 8px;
   border-bottom-right-radius: 8px;
-  border: 2px solid #eee;
+  border: 2px solid #EEE;
   border-left: 0;
   cursor: pointer;
   width: 20px;

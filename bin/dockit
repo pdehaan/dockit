@@ -14,7 +14,7 @@ program
 
 program.on('--help', function(){
   console.log('  document files from comments');
-  console.log('  will use .dockit.json for config if available');
+  console.log('  requires .dockit.json[5] for config');
 });
 
 program.parse(process.argv);
@@ -35,7 +35,7 @@ try {
 }
 
 if(!config.files){
-  console.log("dockit ERROR: no input files");
+  console.log('error: no input files');
   process.exit(1);
 } else {
   if(config.files instanceof Array){
@@ -45,8 +45,13 @@ if(!config.files){
 
 config.output = config.output || 'docs';
 config.github = config.github || {};
-if(config.github.url !== undefined & config.github.text === undefined){
+if(config.github.url !== undefined && config.github.text === undefined){
   config.github.text = "github";
 }
-
+if(config.all !== false){
+  config.all = true;
+}
+if(config.all === true) {
+  config.index = config.index || 'all.html';
+}
 dockit(config);

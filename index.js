@@ -1,19 +1,32 @@
-/* jshint loopfunc: true, unused: false */
+// ## Dockit Lib
+// Require the necessary libraries.
+// Actual file parsing for code and comments is handled by the [noddocco](https://github.com/diffsky/noddocco) lib.
+//
+//
+//
+// A marked instance is configured tp parse strings as markdown
+// using github flavored markdown, passing code highlight
+// callbacks to `highlight.js`
+//
+// A Dust instance is configured and templates loaded and compiled to be used to generate HTML files.
+//
+// All templates from `templates` directory are compiled into the `dust.cache`
+// - preserving any whitespace in the templates by using a format optimizer.
 
+/* jshint loopfunc: true, unused: false */
 var noddocco = require("noddocco"),
-    path = require('path'),
-    fs = require('fs'),
-    dust = require('dustjs-helpers'),
-    ncp = require('ncp').ncp,
-    marked = require('marked'),
-    hl = require('highlight.js'),
-    expand = require('glob-expand');
+path = require('path'),
+fs = require('fs'),
+dust = require('dustjs-helpers'),
+ncp = require('ncp').ncp,
+marked = require('marked'),
+hl = require('highlight.js'),
+expand = require('glob-expand');
 
 marked.setOptions({
   gfm: true,
   pedantic: false,
   sanitize: false,
-  // callback for code highlighter
   highlight: function(code, lang) {
     if(lang === undefined) {
       return code;
@@ -22,13 +35,11 @@ marked.setOptions({
   }
 });
 
-// preserve whitespace in templates
 dust.optimizers.format = function(ctx, node) {return node;};
 
-// load all dust templates
 var template,
-    templateDir = path.join(__dirname, 'templates'),
-    templates = fs.readdirSync(templateDir);
+templateDir = path.join(__dirname, 'templates'),
+templates = fs.readdirSync(templateDir);
 
 for (var i in templates){
   template = templates[i];
@@ -39,8 +50,23 @@ for (var i in templates){
   dust.loadSource(dust.compile(fs.readFileSync(path.join(templateDir, template), 'utf8'), templateName));
 }
 
-var blocks = {}, pages = {}, sections = {}, files = [],
-    dir, fileRepo, key, comment, page, details, ext, input, foundsection;
+// ### Process files and generate documentation
+// A config object passed to the dockit function contains a glob match for all the
+// files to be processed. These matches can be split into sections allowing for finer control
+// over the order in which files are processed and then displayed.
+//
+// For each file in the match, it's name is used to generate a *key* that will
+// serve as the genrated filename (with directory slashes replaced with dashes).
+//
+// Any markdown files are treated as a special case - with `h1`, `h2` and `h3` headings extracted
+// to be added to the pages navigation. The headings are *anchorized* so that scrollspy
+// can capture them clientside and update the pages and files navigation.
+//
+// Other files are passed to `noddocco` to be processed, with returns an object with
+// comment and code properties for the parsed file. The comment section is checked for
+// any `h1`, `h2` and `h3` headings (as above) to be added to the pages navigation.
+var blocks = {}, pages = {}, files = [],
+dir, fileRepo, key, comment, page, details, ext, input, foundsection;
 
 function anchorize(match, p1, p2, offset, string){
   return '</div><div id="'+key+'-s'+(foundsection++)+'" class="section md"><h'+p1+'>'+p2+'</h'+p1+'>';
@@ -48,8 +74,8 @@ function anchorize(match, p1, p2, offset, string){
 
 module.exports = function(config) {
   var opts = {};
+  process.chdir(__dirname);
 
-  // copy over assets
   if(!fs.existsSync(config.output)) {
     fs.mkdirSync(config.output);
   }
@@ -58,7 +84,6 @@ module.exports = function(config) {
       console.log(err);
     }
   });
-
   var matches = [];
   for(var section in config.files){
     expand({filter: 'isFile'}, config.files[section]).forEach(function(f){
@@ -87,17 +112,15 @@ module.exports = function(config) {
       input = marked(input);
       page = input.match(/<h([1-3])>(.*)<\/h[1-3]>/gi);
       for(var j in page){
-          sections[key] = sections[key] || [];
-          details = {
-              page: page[j].match(/<h[1-3]>(.*)<\/h[1-3]>/)[1],
-              section: i++,
-              h: page[j].match(/<h([1-3])>/)[1],
-              key: key
-          };
-          sections[key].push(details);
-          pages[key] = pages[key] || [];
-            pages[key].push(details);
-        }
+        details = {
+          page: page[j].match(/<h[1-3]>(.*)<\/h[1-3]>/)[1],
+          section: i++,
+          h: page[j].match(/<h([1-3])>/)[1],
+          key: key
+        };
+        pages[key] = pages[key] || [];
+        pages[key].push(details);
+      }
 
       var content = '<div>' + input.replace(/<h([1-3])>(.*)<\/h[1-3]>/gi, anchorize) + '</div>';
       blocks[key] = {
@@ -119,19 +142,16 @@ module.exports = function(config) {
           key: key,
           blocks: noddoccoData
         };
-        // pick out the h1-h3 headings in the file to display as "sections" and "pages"
         for (var i in noddoccoData){
           comment = noddoccoData[i].comments;
           page = comment.match(/<h([1-3])>(.*)<\/h[1-3]>/i);
           if(page) {
-            sections[key] = sections[key] || [];
             details = {
-                page: page[2],
-                section: (+i + 1),
-                h: page[1],
-                key: key
+              page: page[2],
+              section: (+i + 1),
+              h: page[1],
+              key: key
             };
-            sections[key].push(details);
             pages[key] = pages[key] || [];
             pages[key].push(details);
           }
@@ -140,6 +160,15 @@ module.exports = function(config) {
     }
   });
 
+  // ### Write the documentation to disk
+  // With the noddocco data generated for each file. Loop through the files and
+  // write their contents to disk.
+  //
+  // By default, alongised individual file pages, Dockit will create a page which is all
+  // the files processed into one, long html page. This page will be the `index.html`
+  // This behaviour can be altered by the dockit configuration
+  //
+  // As the files are written to disk the progress is sent to the console.
   var displaypages = [];
   var orderedblocks = [];
 
@@ -150,8 +179,6 @@ module.exports = function(config) {
     }
   }
 
-  //console.log(pages);
-  //render a page for each block of noddocco data
   console.log('writing...');
   config.project = config.project || 'dockit generated docs';
   var all, dest,
@@ -177,20 +204,18 @@ module.exports = function(config) {
       files: files,
       generated: generated,
       pages: displaypages,
-      //sections: sections[blocks[i].key],
       data: blocks[i]},
       function(err, output){
         if(dest === config.index) {
           dest = 'index.html';
-        } else if (dest === 'readme_md.html' || dest === 'readme_md.html'){
+        } else if (dest.slice(0, 6) === 'readme'){
           fs.writeFileSync(path.join(config.output,'index.html'), output);
         }
         fs.writeFileSync(path.join(config.output, dest), output);
         console.log(path.join(config.output, dest));
-    });
+      });
   }
 
-  //console.log(orderedblocks);
   if(config.all) {
     dust.render('file', {
       all: all,
@@ -202,7 +227,6 @@ module.exports = function(config) {
       files: files,
       generated: generated,
       pages: displaypages,
-      //sections: sections[blocks[i].key],
       data: orderedblocks},
       function(err, output){
         fs.writeFileSync(path.join(config.output, all), output);

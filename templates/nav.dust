@@ -1,26 +1,10 @@
 <div class="nav transformer">
 
-  <span class="ctrl-view-pages ctrl transformer">pages</span>
-  <span class="ctrl-view-files ctrl transformer">files</span>
+  <span class="ctrl-pages ctrl transformer">pages</span>
+  <span class="ctrl-files ctrl transformer">files</span>
   {?showall}
-  {?onAll}
-  <a href="{?index}{index}{:else}index.html{/index}"><span class="ctrl-all ctrl active transformer">∞</span></a>
-  {:else}
-  <a href="all.html"><span class="ctrl-all ctrl transformer">∞</span></a>
-  {/onAll}
+  <a href="{?index}{index}{:else}all.html{/index}"><span class="ctrl-all ctrl active transformer">∞</span></a>
   {/showall}
-
-  {!
-  {?sections}
-  <ol id="sections" class="menu">
-    {#sections}
-    <a class="nav-{key}-s{section}" href="#{key}-s{section}">
-      <li class="h{h}">{page}</li>
-    </a>
-    {/sections}
-  </ol>
-  {/sections}
-  !}
 
   <ol id="files" class="menu hidden">
     {#files}
@@ -36,7 +20,7 @@
   {?pages}
   <ol id="pages" class="menu">
     {#pages}
-    <a class="nav-item nav-{key}-s{section}" href="{?all}{all}{:else}{key}.html{/all}#{key}-s{section}">
+    <a class="nav-item nav-{key}-s{section}" href="{?showall}{all}{:else}{key}.html{/showall}#{key}-s{section}">
       <li class="h{h}" >{page}</li>
     </a>
     {/pages}
