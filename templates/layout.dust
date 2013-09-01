@@ -15,9 +15,9 @@
 
 <div id="container">
     <div class="docs transformer">
-        <span class="ctrl ctrl-nav transformer" >nav</span>
+        <span class="ctrl ctrl-nav transformer" >☰</span>
         {^md}
-        <span class="ctrl-code ctrl transformer">code</span>
+        <span class="ctrl-code ctrl active">code</span>
         {/md}
         {+content}
         content goes here

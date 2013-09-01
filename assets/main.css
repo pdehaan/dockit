@@ -1,31 +1,36 @@
-/*  [normalize css](https://github.com/necolas/normalize.css) */
-article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block}audio,canvas,video{display:inline-block;*display:inline;*zoom:1;}audio:not([controls]){display:none}[hidden]{display:none}html{font-size:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;}html,button,input,select,textarea{font-family:sans-serif}body{margin:0}a:focus{outline:thin dotted}a:hover,a:active{outline:0}h1{font-size:2em;margin:0.67em 0;}h2{font-size:1.5em;margin:0.83em 0;}h3{font-size:1.17em;margin:1em 0;}h4{font-size:1em;margin:1.33em 0;}h5{font-size:0.83em;margin:1.67em 0;}h6{font-size:0.75em;margin:2.33em 0;}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}blockquote{margin:1em 40px}dfn{font-style:italic}mark{background:#ff0;color:#000;}p,pre{margin:1em 0}pre,code,kbd,samp{font-family:monospace,serif;_font-family:'courier new',monospace;font-size:1em;}pre{white-space:pre;white-space:pre-wrap;word-wrap:break-word;}q{quotes:none}q:before,q:after{content:'';content:none;}small{font-size:75%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}sup{top:-0.5em}sub{bottom:-0.25em}dl,menu,ol,ul{margin:1em 0}dd{margin:0 0 0 40px}menu,ol,ul{padding:0 0 0 40px}nav ul,nav ol{list-style:none;list-style-image:none;}img{border:0;-ms-interpolation-mode:bicubic;}svg:not(:root){overflow:hidden}figure{margin:0}form{margin:0}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:0.35em 0.625em 0.75em;}legend{border:0;padding:0;white-space:normal;*margin-left:-7px;}button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle;}button,input{line-height:normal;}button,input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button;*overflow:visible;}button[disabled],input[disabled]{cursor:default}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0;*height:13px;*width:13px;}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;}input[type="search"]::-webkit-search-decoration,input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0;}textarea{overflow:auto;vertical-align:top;}table{border-collapse:collapse;border-spacing:0;}
+/*! normalize.css v2.1.3 | MIT License | git.io/normalize */
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}audio,canvas,video{display:inline-block}audio:not([controls]){display:none;height:0}[hidden],template{display:none}html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}a{background:transparent}a:focus{outline:thin dotted}a:active,a:hover{outline:0}h1{font-size:2em;margin:.67em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}mark{background:#ff0;color:#000}code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}pre{white-space:pre-wrap}q{quotes:"\201C" "\201D" "\2018" "\2019"}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:0}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}button,input{line-height:normal}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
 
 .transformer {
-  -webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  transition: all 1s ease;
+  -webkit-transition: all 1s ease, background-color 0;
+  -moz-transition: all 1s ease, background-color 0;
+  -o-transition: all 1s ease, background-color 0;
+  transition: all 1s ease, background-color 0;
 }
 
-body{
-  color:#333;
-  font: 0.85em Helvetica, arial, freesans, clean, sans-serif;
+body {
+  color: #333;
+  font: 0.85em "Source Sans Pro", sans-serif;
 }
 
 .dockit {
-  background-color:#FFF;
-  border-collapse:collapse;
-  border:0;width:100%;margin:0;padding:0;
+  background-color: #FFF;
+  border-collapse: collapse;
+  border: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .dockit td {
-  border:0;
-  vertical-align:top;
+  border: 0;
+  vertical-align: top;
+  width: 50%;
 }
 
-.dockit td {
-  width:50%;
+/* buffer to help scrollspy catch the last element */
+.dockit tr:last-child td {
+  padding-bottom: 30em;
 }
 
 .dockit td.comments h1, .dockit td.comments h2, .dockit td.comments h3 {
@@ -35,21 +40,22 @@ body{
 
 .dockit td.comments h1 {
   font-size: 3em;
-  margin-top: 20px;
+  padding-top: 20px;
 }
 
 .dockit td.comments h2 {
   font-size: 2em;
-  margin-top: 40px;
+  padding-top: 30px;
 }
 
 .dockit td.comments h3 {
   font-size: 1.3em;
-  margin-top: 40px;
+  padding-top: 30px;
 }
 
 .dockit td.comments {
-  font: 1.1rem 'Palatino Linotype','Book Antiqua',Palatino,FreeSerif,serif;
+  font: 0.9rem "Source Sans Pro",sans-serif;
+  font-weight: 300;
   padding: 0 20px 0 40px;
 }
 
@@ -67,13 +73,22 @@ body{
   border-radius: 3px;
 }
 
-.dockit td.comments li ul{
+.dockit td.comments ul {
+  padding-left: 20px;
+}
+
+.dockit td.comments li ul {
   padding: 2px;
-  margin: 4px 4px 4px 20px;
+  margin: 4px;
+}
+
+.dockit td.comments li {
+  padding: 3px;
+  font-size: 1rem;
 }
 
 .dockit td.comments p code, .dockit td.comments li code {
-  padding:2px;
+  padding: 2px;
 }
 
 .dockit td.code {
@@ -118,16 +133,16 @@ body{
   margin-left: 222px;
 }
 
-.doc{
+.doc {
   overflow: hidden;
 }
 
-.docs-full{
+.docs-full {
   margin-left: 0;
 }
 
 p {
-  font-size: 1.1em;
+  font-size: 1rem;
   line-height: 1.3em;
 }
 
@@ -138,9 +153,10 @@ span.active, .active {
 }
 
 .menu {
-  margin:0;
-  padding:0;
-  list-style-type: none
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  font-weight:300;
 }
 
 .menu a {
@@ -166,26 +182,22 @@ span.active, .active {
 
 .menu span.file {
   font-size: 1.2em;
-  font-weight:bold;
+  font-weight: bold;
   }
 
-#sections {
-  margin-bottom:1.2em;
-}
-
 .menu .h1 {
-  font-size:1.2em;
+  font-size: 1.2em;
   font-weight: bold;
   padding-left: 0.1em;
 }
 
 .menu .h2 {
-  font-size:1.1em;
+  font-size: 1.1em;
   padding-left: 0.6em;
 }
 
 .menu .h3 {
-  font-size:1em;
+  font-size: 1em;
   padding-left: 1.3em;
 }
 
@@ -222,6 +234,8 @@ span.active, .active {
   padding-left:14px;
 }
 
+
+
 .ctrl-hide {
   top: -100px;
 }
@@ -253,17 +267,39 @@ a .ctrl {
   left: 90%;
 }
 
-.ctrl-nav {
+/*.ctrl-nav {
   height: 25px;
   top: 80px;
   left: 199px;
   width: 55px;
   -webkit-transform: rotate(-90deg);
   -moz-transform: rotate(-90deg);
-}
+}*/
 
-.ctrl-nav-closed{
-  left: -22px;
+.ctrl-nav {
+  display:block;
+  background-color: #FFF;
+  -moz-border-radius-bottomleft: 0;
+  -webkit-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+  -moz-border-radius-topright: 8px;
+  -webkit-border-top-right-radius: 8px;
+  border-top-right-radius: 8px;
+  -moz-border-radius-bottomright: 8px;
+  -webkit-border-bottom-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border: 2px solid #eee;
+  border-left: 0;
+  cursor: pointer;
+  width: 20px;
+  font-size: 1.2em;
+  height: 22px;
+  position: fixed;
+  top: 15px;
+  bottom: 0;
+  padding: 0 5px 5px 5px;
+
+  font-size: 1.5em;
 }
 
 .hidden {
@@ -278,6 +314,15 @@ a .ctrl {
   color: #ddd;
 }
 
+/* code */
+
+pre code {
+  display: block;
+  color: #4d4d4c;
+  font-family: Menlo, Monaco, Consolas, monospace;
+  line-height: 1.5;
+  padding: 10px 10px 10px 20px;
+}
 
 /* highlighting theme */
 
@@ -320,13 +365,4 @@ a .ctrl {
 .hifile .keyword, .hifile .function {
   color: #4A658B;
   font-weight: bold;
-}
-
-
-pre code {
-  display: block;
-  color: #4d4d4c;
-  font-family: Menlo, Monaco, Consolas, monospace;
-  line-height: 1.5;
-  padding: 10px 10px 10px 20px;
 }

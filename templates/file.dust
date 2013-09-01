@@ -8,11 +8,11 @@
         {?githubUrl}<a href="{githubUrl|s}/blob/master/{fileRepo}"><span class="github">{githubText}</span></a>{/githubUrl}
         <div class="con">{block|s}</div>
     </td>
-    {?all}
+    {?onAll}
     <td class="code">
         <div class="con"><pre><code></pre></code></div>
     </td>
-    {/all}
+    {/onAll}
 </tr>
 {:else}
 {#blocks}
@@ -21,7 +21,7 @@
         {?githubUrl}{@if cond="'{section}'=='1'"}<a href="{githubUrl|s}/blob/master/{fileRepo}"><span class="github">{githubText}</span></a>{/if}{/githubUrl}
         <div class="con">{comments|s}</div>
     </td>
-    <td class="code transformer">
+    <td class="code">
         <div class="con"><pre class="hifile"><code>{code|s}</pre></code></div>
     </td>
 </tr>

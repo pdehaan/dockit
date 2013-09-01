@@ -39,11 +39,11 @@ for (var i in templates){
   dust.loadSource(dust.compile(fs.readFileSync(path.join(templateDir, template), 'utf8'), templateName));
 }
 
-var blocks = {}, pages = {}, files = [],
+var blocks = {}, pages = {}, sections = {}, files = [],
     dir, fileRepo, key, comment, page, details, ext, input, foundsection;
 
 function anchorize(match, p1, p2, offset, string){
-  return '<h'+p1+' id="'+key+'-s'+(foundsection++)+'" class="section md">'+p2+'</h'+p1+'>';
+  return '</div><div id="'+key+'-s'+(foundsection++)+'" class="section md"><h'+p1+'>'+p2+'</h'+p1+'>';
 }
 
 module.exports = function(config) {
@@ -87,16 +87,19 @@ module.exports = function(config) {
       input = marked(input);
       page = input.match(/<h([1-3])>(.*)<\/h[1-3]>/gi);
       for(var j in page){
+          sections[key] = sections[key] || [];
           details = {
               page: page[j].match(/<h[1-3]>(.*)<\/h[1-3]>/)[1],
               section: i++,
               h: page[j].match(/<h([1-3])>/)[1],
               key: key
           };
+          sections[key].push(details);
           pages[key] = pages[key] || [];
             pages[key].push(details);
         }
-      var content = input.replace(/<h([1-3])>(.*)<\/h[1-3]>/gi, anchorize);
+
+      var content = '<div>' + input.replace(/<h([1-3])>(.*)<\/h[1-3]>/gi, anchorize) + '</div>';
       blocks[key] = {
         md: true,
         file: file,
@@ -121,12 +124,14 @@ module.exports = function(config) {
           comment = noddoccoData[i].comments;
           page = comment.match(/<h([1-3])>(.*)<\/h[1-3]>/i);
           if(page) {
+            sections[key] = sections[key] || [];
             details = {
                 page: page[2],
                 section: (+i + 1),
                 h: page[1],
                 key: key
             };
+            sections[key].push(details);
             pages[key] = pages[key] || [];
             pages[key].push(details);
           }
@@ -149,11 +154,17 @@ module.exports = function(config) {
   //render a page for each block of noddocco data
   console.log('writing...');
   config.project = config.project || 'dockit generated docs';
-  var all = [],
-      dest,
+  var all, dest,
       generated = new Date();
+
+  all = 'all.html';
+  if(config.index === 'all.html'){
+    config.index = 'index.html';
+    all = 'index.html';
+  }
+
   for (i in blocks){
-    dest = blocks[i].key;
+    dest = blocks[i].key + '.html';
 
     dust.render('file', {
       md: blocks[i].md,
@@ -161,27 +172,29 @@ module.exports = function(config) {
       index: config.index,
       github: config.github,
       showall: config.all,
+      all: all,
       current: blocks[i].key,
       files: files,
       generated: generated,
       pages: displaypages,
+      //sections: sections[blocks[i].key],
       data: blocks[i]},
       function(err, output){
-        if(dest === 'readme_md'){
+        if(dest === config.index) {
+          dest = 'index.html';
+        } else if (dest === 'readme_md.html' || dest === 'readme_md.html'){
           fs.writeFileSync(path.join(config.output,'index.html'), output);
         }
-        fs.writeFileSync(path.join(config.output, dest + '.html'), output);
+        fs.writeFileSync(path.join(config.output, dest), output);
         console.log(path.join(config.output, dest));
     });
-
-    all.push(blocks[i]);
   }
 
   //console.log(orderedblocks);
   if(config.all) {
-    dest = 'all.html';
     dust.render('file', {
-      all: true,
+      all: all,
+      onAll: true,
       title: config.project,
       index: config.index,
       github: config.github,
@@ -189,11 +202,12 @@ module.exports = function(config) {
       files: files,
       generated: generated,
       pages: displaypages,
+      //sections: sections[blocks[i].key],
       data: orderedblocks},
       function(err, output){
-        fs.writeFileSync(path.join(config.output, dest), output);
-        console.log(path.join(config.output, dest));
-    });
+        fs.writeFileSync(path.join(config.output, all), output);
+        console.log(path.join(config.output, all));
+      });
   }
   console.log('...done!');
 };
