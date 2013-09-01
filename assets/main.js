@@ -2,9 +2,6 @@ function setScrollspy(){
   $('.section').each(function() {
     var position = $(this).position();
     var offset = 10;
-    // if($(this).hasClass('md')){
-    //   offset = 0;
-    // }
     //console.log(position);
     //console.log('min: ' + (position.top-offset) + ' / max: ' + parseInt(position.top + $(this).height()));
     $(this).scrollspy({

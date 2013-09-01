@@ -1,49 +1,47 @@
 <div class="nav transformer">
 
-    <span class="ctrl-view-pages ctrl transformer">pages</span>
-    <span class="ctrl-view-files ctrl transformer">files</span>
-    {?showall}
-    {?onAll}
-    <a href="{?index}{index}{:else}index.html{/index}"><span class="ctrl-all ctrl active transformer">∞</span></a>
-    {:else}
-    <a href="all.html"><span class="ctrl-all ctrl transformer">∞</span></a>
-    {/onAll}
-    {/showall}
+  <span class="ctrl-view-pages ctrl transformer">pages</span>
+  <span class="ctrl-view-files ctrl transformer">files</span>
+  {?showall}
+  {?onAll}
+  <a href="{?index}{index}{:else}index.html{/index}"><span class="ctrl-all ctrl active transformer">∞</span></a>
+  {:else}
+  <a href="all.html"><span class="ctrl-all ctrl transformer">∞</span></a>
+  {/onAll}
+  {/showall}
 
-
-
-<!--     {?sections}
-    <ol id="sections" class="menu">
+  {!
+  {?sections}
+  <ol id="sections" class="menu">
     {#sections}
     <a class="nav-{key}-s{section}" href="#{key}-s{section}">
-        <li class="h{h}">{page}</li>
+      <li class="h{h}">{page}</li>
     </a>
     {/sections}
-    </ol>
-    {/sections}
- -->
+  </ol>
+  {/sections}
+  !}
 
-    <ol id="files" class="menu hidden">
+  <ol id="files" class="menu hidden">
     {#files}
     <a class="nav-item nav-{key}" href="{key}.html#__file">
-        <li {@if cond="'{current}'=='{key}'"}class="active"{/if}>
+      <li {@if cond="'{current}'=='{key}'"}class="active"{/if}>
         <span class="dir">{dir}</span>
         <span class="file">{file}</span>
-        </li>
+      </li>
     </a>
     {/files}
-    </ol>
+  </ol>
 
-    {?pages}
-    <ol id="pages" class="menu">
+  {?pages}
+  <ol id="pages" class="menu">
     {#pages}
     <a class="nav-item nav-{key}-s{section}" href="{?all}{all}{:else}{key}.html{/all}#{key}-s{section}">
-        <li class="h{h}" >{page}</li>
+      <li class="h{h}" >{page}</li>
     </a>
     {/pages}
-    </ol>
-    {/pages}
+  </ol>
+  {/pages}
 
-    <p id="generated">generated {generated}</p>
-
+  <p id="generated">generated {generated}</p>
 </div>
