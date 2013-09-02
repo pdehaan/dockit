@@ -4,7 +4,7 @@
 # Dockit
 
 Dockit is a documentation generator, inspired by [docco](http://jashkenas.github.com/docco/),
-written in Literate Javascript. It produces a set of HTML documents that display your comments
+written in Literate JavaScript. It produces a set of HTML documents that display your comments
 intermingled with your code, for your entire project.
 
 All prose is passed through Markdown, and code is passed through Highlight.js syntax highlighting.

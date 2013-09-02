@@ -3,7 +3,7 @@
   <span class="ctrl-pages ctrl ctrl-hide transformer">pages</span>
   <span class="ctrl-files ctrl ctrl-hide transformer">files</span>
   {?showall}
-  <a href="{?index}{index}{:else}all.html{/index}?menu=1"><span class="ctrl-all ctrl ctrl-hide transformer">∞</span></a>
+  <a href="{?index}{index}{:else}all.html{/index}?menu=1"><span class="ctrl-all ctrl ctrl-hide {?onAll}active{/onAll} transformer">∞</span></a>
   {/showall}
 
   <ol id="files" class="menu hidden">
