@@ -10,8 +10,8 @@
 </head>
 <body>
 <div id="container">
-  <div class="docs transformer">
-    <span class="ctrl ctrl-nav active transformer" >☰</span>
+  <div class="docs docs-full transformer">
+    <span class="ctrl ctrl-nav transformer" >☰</span>
     {^md}<span class="ctrl-code ctrl active">code</span>{/md}
     {+content}{/content}
   </div>
