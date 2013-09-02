@@ -79,7 +79,7 @@ module.exports = function(config) {
   if(!fs.existsSync(config.output)) {
     fs.mkdirSync(config.output);
   }
-  ncp(path.join(__dirname, 'assets'), path.join(config.output, 'assets'), function (err) {
+  ncp(path.join(__dirname, 'assets'), path.join(config.output, '__assets'), function (err) {
     if (err) {
       console.log(err);
     }
@@ -90,6 +90,22 @@ module.exports = function(config) {
       matches.push(f);
     });
   }
+
+  config.assets.forEach(function(asset){
+
+    //asset = path.resolve(asset);
+
+    //console.log();
+
+
+
+    ncp(path.resolve(asset), path.join(config.output, '__assets', path.basename(asset)), function (err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+    //config.log(path.join(__dirname, 'assets'), path.join(config.output, 'assets'));
+  });
 
   matches.forEach(function(file){
     ext = path.extname(file).slice(1);
@@ -202,6 +218,7 @@ module.exports = function(config) {
       all: all,
       current: blocks[i].key,
       files: files,
+      favicon: config.favicon,
       generated: generated,
       pages: displaypages,
       data: blocks[i]},
@@ -225,6 +242,7 @@ module.exports = function(config) {
       github: config.github,
       showall: config.all,
       files: files,
+      favicon: config.favicon,
       generated: generated,
       pages: displaypages,
       data: orderedblocks},

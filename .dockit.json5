@@ -3,7 +3,13 @@
 
 // *project*: Project name
 //
-// *github* : url and text to display for github repo link
+// *github*: url and text to display for github repo link
+//
+// *assets*: an array of filenames in the project to copy to the `__assets` directory to
+// be available in the generated documentation, such as the favicon image. Assets copied
+// in this way are available at `__assets/asset.ext`
+//
+// *favicon*: filename to use for favicon. Original image should be an entry in above assets config
 //
 // *files*: a series of glob matches to indicate which files to parse
 // glob matches are specified in separate properites. These namings are arbitrary
@@ -33,11 +39,13 @@
 // set to true, this will point to the all page.
 //
 {
-  "project": "Dockit",
+  "project": "ockit",
   "github" : {
     "url" : "https://github.com/diffsky/dockit",
     "text" : "github"
   },
+  "assets" : [ "dockit-assets/dockit.png" ],
+  "favicon": "dockit.png",
   "files": {
     "first" : [
       "README.md",

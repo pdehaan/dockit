@@ -2,21 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="assets/main.css">
-  <script src="assets/libs.js"></script>
-  <script src="assets/main.js"></script>
+  <link rel="stylesheet" type="text/css" href="__assets/main.css">
+  <script src="__assets/libs.js"></script>
+  <script src="__assets/main.js"></script>
+  {?favicon}<link rel="shortcut icon" href="__assets/{favicon}">{/favicon}
   <title>{title}</title>
 </head>
 <body>
 <div id="container">
   <div class="docs transformer">
     <span class="ctrl ctrl-nav active transformer" >☰</span>
-    {^md}
-    <span class="ctrl-code ctrl active">code</span>
-    {/md}
-    {+content}
-    content goes here
-    {/content}
+    {^md}<span class="ctrl-code ctrl active">code</span>{/md}
+    {+content}{/content}
   </div>
 </div>
 {>nav/}

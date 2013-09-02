@@ -1,7 +1,7 @@
 {
   "name": "dockit",
   "description": "automatic documentation generator",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "scripts": {
     "start": "node app"
   },
@@ -33,6 +33,6 @@
     "automatic",
     "comments"
   ],
-  "author": "Matt Hadley",
+  "author": "Matthew Hadley <matthew.hadley@gmail.com>",
   "license": "MIT"
 }

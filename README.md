@@ -14,5 +14,5 @@ This page is the result of running Dockit against its own source files.
 
 ## Usage
 
-Run inside a directory with a `.dockit.json5` file or pass the location as a command
+Run inside a directory with a `.dockit.json[5]` file or pass the config location as a command
 line option, see `dockit --help`

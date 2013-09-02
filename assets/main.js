@@ -15,7 +15,7 @@
           var pageEl = $('.nav-'+element.id+' li');
           // file highlight
           var fileEl = $('.nav-'+(element.id.slice(0, element.id.lastIndexOf('-')))+' li');
-          // check for class rather than just toggle due to multiple scollspay targets
+          // check for class rather than just toggle due to multiple scollspy targets
           if(!pageEl.hasClass('active')) {
             pageEl.addClass('active');
           }
