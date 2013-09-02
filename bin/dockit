@@ -19,20 +19,21 @@ program.on('--help', function(){
 
 program.parse(process.argv);
 
-var config;
+var config, configPath;
 
 if(program.config) {
-  config = path.join(process.cwd(),program.config);
+  configPath = path.join(process.cwd(),program.config);
 } else {
-  config = path.join(process.cwd(),'.dockit');
+  configPath = path.join(process.cwd(),'.dockit');
 }
 
 try {
-  config = require(config);
+  config = require(configPath);
 } catch (e) {
   console.log(e);
   process.exit(1);
 }
+config.configDir = path.dirname(configPath);
 
 if(!config.files){
   console.log('error: no input files');
@@ -44,6 +45,7 @@ if(!config.files){
 }
 
 config.output = config.output || 'docs';
+config.outputAbsolute = path.join(config.configDir, config.output);
 config.github = config.github || {};
 if(config.github.url !== undefined && config.github.text === undefined){
   config.github.text = "github";

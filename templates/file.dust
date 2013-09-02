@@ -1,32 +1,32 @@
 {>layout/}
 {<content}
 <table class="dockit{?md}{^all} single{/all}{/md}">
-  {#data githubUrl=github.url githubText=github.text}
-  {?md}
-  <tr>
+{#data githubUrl=github.url githubText=github.text}
+{?md}
+<tr>
     <td class="comments">
-      {?githubUrl}<a href="{githubUrl|s}/blob/master/{fileRepo}"><span class="github">{githubText}</span></a>{/githubUrl}
-      <div class="con">{block|s}</div>
+        {?githubUrl}<a class="github" href="{githubUrl|s}/blob/master/{fileRepo}">{githubText}</a>{/githubUrl}
+        <div class="con">{block|s}</div>
     </td>
     {?onAll}
     <td class="code">
-      <div class="con"><pre><code></pre></code></div>
+        <div class="con"><pre><code></pre></code></div>
     </td>
     {/onAll}
-  </tr>
-  {:else}
-  {#blocks}
-  <tr id="{key}-s{section}" class="section">
+</tr>
+{:else}
+{#blocks}
+<tr id="{key}-s{section}" class="section">
     <td class="comments">
-      {?githubUrl}{@if cond="'{section}'=='1'"}<a href="{githubUrl|s}/blob/master/{fileRepo}"><span class="github">{githubText}</span></a>{/if}{/githubUrl}
-      <div class="con">{comments|s}</div>
+        {?githubUrl}{@if cond="'{section}'=='1'"}<a class="github" href="{githubUrl|s}/blob/master/{fileRepo}">{githubText}</a>{/if}{/githubUrl}
+        <div class="con">{comments|s}</div>
     </td>
     <td class="code">
-      <div class="con"><pre class="hifile"><code>{code|s}</pre></code></div>
+        <div class="con"><pre class="hifile"><code>{code|s}</pre></code></div>
     </td>
-  </tr>
-  {/blocks}
-  {/md}
-  {/data}
+</tr>
+{/blocks}
+{/md}
+{/data}
 </table>
 {/content}

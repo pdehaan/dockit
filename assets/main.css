@@ -247,8 +247,6 @@ span.active {
   padding-left:14px;
 }
 
-
-
 .ctrl-hide {
   top: -100px;
 }
@@ -310,12 +308,13 @@ a .ctrl {
   display:none;
 }
 
-.github {
+a.github {
   float: right;
-  padding-top: 25px;
+  margin-top: 25px;
   font-size: 0.8em;
   text-align:center;
   color: #ddd;
+  background-color:#FFF;
 }
 
 /* code */

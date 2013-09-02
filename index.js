@@ -21,7 +21,8 @@ dust = require('dustjs-helpers'),
 ncp = require('ncp').ncp,
 marked = require('marked'),
 hl = require('highlight.js'),
-expand = require('glob-expand');
+expand = require('glob-expand'),
+mkdirp = require('mkdirp');
 
 marked.setOptions({
   gfm: true,
@@ -73,38 +74,32 @@ function anchorize(match, p1, p2, offset, string){
 }
 
 module.exports = function(config) {
-  var opts = {};
-  process.chdir(__dirname);
+  var opts = {},
+      owd = process.cwd();
 
-  if(!fs.existsSync(config.output)) {
-    fs.mkdirSync(config.output);
+  if(!fs.existsSync(config.outputAbsolute)) {
+    mkdirp.sync(config.outputAbsolute);
   }
-  ncp(path.join(__dirname, 'assets'), path.join(config.output, '__assets'), function (err) {
+  ncp(path.join(__dirname, 'assets'), path.join(config.outputAbsolute, '__assets'), function (err) {
     if (err) {
       console.log(err);
     }
   });
   var matches = [];
+  process.chdir(config.configDir);
   for(var section in config.files){
     expand({filter: 'isFile'}, config.files[section]).forEach(function(f){
-      matches.push(f);
+      matches.push(path.join(config.configDir, f));
     });
   }
+  process.chdir(owd);
 
   config.assets.forEach(function(asset){
-
-    //asset = path.resolve(asset);
-
-    //console.log();
-
-
-
-    ncp(path.resolve(asset), path.join(config.output, '__assets', path.basename(asset)), function (err) {
+    ncp(path.join(config.configDir, asset), path.join(config.outputAbsolute, '__assets', path.basename(asset)), function (err) {
       if (err) {
         console.log(err);
       }
     });
-    //config.log(path.join(__dirname, 'assets'), path.join(config.output, 'assets'));
   });
 
   matches.forEach(function(file){
@@ -226,9 +221,9 @@ module.exports = function(config) {
         if(dest === config.index) {
           dest = 'index.html';
         } else if (dest.slice(0, 6) === 'readme'){
-          fs.writeFileSync(path.join(config.output,'index.html'), output);
+          fs.writeFileSync(path.join(config.outputAbsolute,'index.html'), output);
         }
-        fs.writeFileSync(path.join(config.output, dest), output);
+        fs.writeFileSync(path.join(config.outputAbsolute, dest), output);
         console.log(path.join(config.output, dest));
       });
   }
@@ -247,7 +242,7 @@ module.exports = function(config) {
       pages: displaypages,
       data: orderedblocks},
       function(err, output){
-        fs.writeFileSync(path.join(config.output, all), output);
+        fs.writeFileSync(path.join(config.outputAbsolute, all), output);
         console.log(path.join(config.output, all));
       });
   }
