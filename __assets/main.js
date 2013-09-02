@@ -83,7 +83,8 @@
       pages.addClass('hidden');
       files.removeClass('hidden');
       // ensure nav is scrolled to the file being shown
-      nav.scrollTop(($('.nav-' + window.location.pathname.substring(1).slice(0, -5)).position().top - 200));
+      var split = window.location.pathname.split('/');
+      nav.scrollTop(($('.nav-' + split[(split.length - 1)].slice(0, -5))).position().top - 200);
     } else {
       // showing a page
       ctrlPages.addClass('active');
