@@ -3,12 +3,12 @@
   <span class="ctrl-pages ctrl ctrl-hide transformer">pages</span>
   <span class="ctrl-files ctrl ctrl-hide transformer">files</span>
   {?showall}
-  <a href="{?index}{index}{:else}all.html{/index}#__menu"><span class="ctrl-all ctrl ctrl-hide transformer">∞</span></a>
+  <a href="{?index}{index}{:else}all.html{/index}?menu=1"><span class="ctrl-all ctrl ctrl-hide transformer">∞</span></a>
   {/showall}
 
   <ol id="files" class="menu hidden">
     {#files}
-    <a class="nav-item nav-{key}" href="{key}.html#__menu__file">
+    <a class="nav-item nav-{key}" href="{key}.html?menu=1&amp;file=1">
       <li {@if cond="'{current}'=='{key}'"}class="active"{/if}>
         <span class="dir">{dir}</span>
         <span class="file">{file}</span>
@@ -20,7 +20,7 @@
   {?pages}
   <ol id="pages" class="menu">
     {#pages}
-    <a class="nav-item nav-{key}-s{section}" href="{?showall}{all}{:else}{key}.html{/showall}#{key}-s{section}#__menu">
+    <a class="nav-item nav-{key}-s{section}" href="{?showall}{all}{:else}{key}.html{/showall}?menu=1#{key}-s{section}">
       <li class="h{h}" >{page}</li>
     </a>
     {/pages}
