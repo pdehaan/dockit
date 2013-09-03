@@ -84,7 +84,6 @@ line option, see <code>dockit --help</code></p>
  the top level project <code>README</code> will be used</p>
 <p> <em>index</em>: remap the index page to another generated html page. By default, with all
  set to true, this will point to the all page.</p>
-<p> <em>allHash</em>: add an optional hash to the url for the all page (to link to an anchor)</p>
 </div>
     </td>
     <td class="code">
@@ -114,7 +113,7 @@ line option, see <code>dockit --help</code></p>
   <span class="string">"ignores"</span>: [
     <span class="string">"/* jshint"</span>
   ],
-  <span class="string">"allHash"</span> : <span class="string">"#readme_md-s1"</span>
+  <span class="string">"index"</span> : <span class="string">"all.html#readme_md-s1"</span>
 }
 </pre></code></div>
     </td>
@@ -351,7 +350,6 @@ module.exports = <span class="keyword">function</span>(config) {
       github: config.github,
       showall: config.all,
       all: all,
-      allHash: config.allHash,
       current: blocks[i].key,
       files: files,
       favicon: config.favicon,
@@ -372,7 +370,6 @@ module.exports = <span class="keyword">function</span>(config) {
   <span class="keyword">if</span>(config.all) {
     dust.render(<span class="string">'file'</span>, {
       all: all,
-      allHash: config.allHash,
       onAll: <span class="literal">true</span>,
       title: config.project,
       index: config.index,
@@ -405,7 +402,7 @@ module.exports = <span class="keyword">function</span>(config) {
   <span class="ctrl-pages ctrl ctrl-hide transformer">pages</span>
   <span class="ctrl-files ctrl ctrl-hide transformer">files</span>
   
-  <a href="index.html?menu=1#readme_md-s1"><span class="ctrl-all ctrl ctrl-hide active transformer">∞</span></a>
+  <a href="all.html#readme_md-s1?menu=1"><span class="ctrl-all ctrl ctrl-hide active transformer">∞</span></a>
   
 
   <ol id="files" class="menu hidden">
@@ -436,38 +433,38 @@ module.exports = <span class="keyword">function</span>(config) {
   
   <ol id="pages" class="menu">
     
-    <a class="nav-item nav-readme_md-s1" href="index.html?menu=1#readme_md-s1">
+    <a class="nav-item nav-readme_md-s1" href="all.html?menu=1#readme_md-s1">
       <li class="h1" >Dockit</li>
     </a>
     
-    <a class="nav-item nav-readme_md-s2" href="index.html?menu=1#readme_md-s2">
+    <a class="nav-item nav-readme_md-s2" href="all.html?menu=1#readme_md-s2">
       <li class="h2" >Installation</li>
     </a>
     
-    <a class="nav-item nav-readme_md-s3" href="index.html?menu=1#readme_md-s3">
+    <a class="nav-item nav-readme_md-s3" href="all.html?menu=1#readme_md-s3">
       <li class="h2" >Usage</li>
     </a>
     
-    <a class="nav-item nav-_dockit_json5-s1" href="index.html?menu=1#_dockit_json5-s1">
+    <a class="nav-item nav-_dockit_json5-s1" href="all.html?menu=1#_dockit_json5-s1">
       <li class="h2" >Configuration</li>
     </a>
     
-    <a class="nav-item nav-index_js-s1" href="index.html?menu=1#index_js-s1">
+    <a class="nav-item nav-index_js-s1" href="all.html?menu=1#index_js-s1">
       <li class="h2" >Dockit Lib</li>
     </a>
     
-    <a class="nav-item nav-index_js-s2" href="index.html?menu=1#index_js-s2">
+    <a class="nav-item nav-index_js-s2" href="all.html?menu=1#index_js-s2">
       <li class="h3" >Process files and generate documentation</li>
     </a>
     
-    <a class="nav-item nav-index_js-s3" href="index.html?menu=1#index_js-s3">
+    <a class="nav-item nav-index_js-s3" href="all.html?menu=1#index_js-s3">
       <li class="h3" >Write the documentation to disk</li>
     </a>
     
   </ol>
   
 
-  <p id="generated">generated Mon Sep 02 2013 17:08:07 GMT-0700 (PDT)</p>
+  <p id="generated">generated Mon Sep 02 2013 17:04:35 GMT-0700 (PDT)</p>
 </div>
 
 </body>

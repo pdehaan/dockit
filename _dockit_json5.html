@@ -58,6 +58,7 @@
  the top level project <code>README</code> will be used</p>
 <p> <em>index</em>: remap the index page to another generated html page. By default, with all
  set to true, this will point to the all page.</p>
+<p> <em>allHash</em>: add an optional hash to the url for the all page (to link to an anchor)</p>
 </div>
     </td>
     <td class="code">
@@ -86,7 +87,8 @@
   <span class="string">"ctypes"</span>: [<span class="string">"BRACKET_BANG"</span>],
   <span class="string">"ignores"</span>: [
     <span class="string">"/* jshint"</span>
-  ]
+  ],
+  <span class="string">"allHash"</span> : <span class="string">"#readme_md-s1"</span>
 }
 </pre></code></div>
     </td>
@@ -103,7 +105,7 @@
   <span class="ctrl-pages ctrl ctrl-hide transformer">pages</span>
   <span class="ctrl-files ctrl ctrl-hide transformer">files</span>
   
-  <a href="index.html?menu=1"><span class="ctrl-all ctrl ctrl-hide  transformer">∞</span></a>
+  <a href="index.html?menu=1#readme_md-s1"><span class="ctrl-all ctrl ctrl-hide  transformer">∞</span></a>
   
 
   <ol id="files" class="menu hidden">
@@ -165,7 +167,7 @@
   </ol>
   
 
-  <p id="generated">generated Mon Sep 02 2013 15:47:11 GMT-0700 (PDT)</p>
+  <p id="generated">generated Mon Sep 02 2013 17:08:07 GMT-0700 (PDT)</p>
 </div>
 
 </body>
