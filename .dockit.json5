@@ -38,6 +38,8 @@
 // *index*: remap the index page to another generated html page. By default, with all
 // set to true, this will point to the all page.
 //
+// *allHash*: add an optional hash to the url for the all page (to link to an anchor)
+//
 {
   "project": "ockit",
   "github" : {
@@ -63,5 +65,6 @@
   "ctypes": ["BRACKET_BANG"],
   "ignores": [
     "/* jshint"
-  ]
+  ],
+  "allHash" : "#readme_md-s1"
 }

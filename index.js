@@ -211,6 +211,7 @@ module.exports = function(config) {
       github: config.github,
       showall: config.all,
       all: all,
+      allHash: config.allHash,
       current: blocks[i].key,
       files: files,
       favicon: config.favicon,
@@ -231,6 +232,7 @@ module.exports = function(config) {
   if(config.all) {
     dust.render('file', {
       all: all,
+      allHash: config.allHash,
       onAll: true,
       title: config.project,
       index: config.index,
