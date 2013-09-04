@@ -87,6 +87,10 @@ body {
   font-size: 1rem;
 }
 
+.dockit td.comments li p {
+  margin: 4px 0px 4px 0px;
+}
+
 .dockit td.comments p code, .dockit td.comments li code {
   padding: 2px;
 }
