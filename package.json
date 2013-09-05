@@ -1,7 +1,7 @@
 {
   "name": "dockit",
   "description": "automatic documentation generator",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "scripts": {
     "start": "node app"
   },
