@@ -6,6 +6,8 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,su
   -moz-transition: all 1s ease, background-color 0s;
   -o-transition: all 1s ease, background-color 0s;
   transition: all 1s ease, background-color 0s;
+  /* fix for vanishing dom elements in chrome */
+  -webkit-transform: translateZ(0);
 }
 
 body {
