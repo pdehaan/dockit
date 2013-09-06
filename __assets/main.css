@@ -87,6 +87,10 @@ body {
   font-size: 1rem;
 }
 
+.dockit td.comments li p {
+  margin: 4px 0px 4px 0px;
+}
+
 .dockit td.comments p code, .dockit td.comments li code {
   padding: 2px;
 }
@@ -123,6 +127,8 @@ body {
   border-right: 2px solid #eee;
   padding-top: 2em;
   padding-bottom: 20px;
+  /* fix for vanishing dom elements in chrome */
+  -webkit-transform: translateZ(0);
 }
 
 .nav-hide {
@@ -300,8 +306,9 @@ a .ctrl {
   top: 15px;
   bottom: 0;
   padding: 0 5px 5px 5px;
-
   font-size: 1.5em;
+  /* fix for vanishing dom elements in chrome */
+  -webkit-transform: translateZ(0);
 }
 
 .hidden {
