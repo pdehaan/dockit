@@ -10,14 +10,15 @@
 //
 // A Dust instance is configured and templates loaded and compiled to be used to generate HTML files.
 //
-// All templates from `templates` directory are compiled into the `dust.cache`
+// All templates from `templates` directory are compiled into the `dust.cache` via [duster](https://github.com/diffsky/noddocco)
 // - preserving any whitespace in the templates by using a format optimizer.
 
 /* jshint loopfunc: true, unused: false */
 var noddocco = require("noddocco"),
 path = require('path'),
 fs = require('fs'),
-dust = require('dustjs-helpers'),
+duster = require('duster'),
+dust = duster.dust,
 ncp = require('ncp').ncp,
 marked = require('marked'),
 hl = require('highlight.js'),
@@ -37,19 +38,7 @@ marked.setOptions({
 });
 
 dust.optimizers.format = function(ctx, node) {return node;};
-
-var template,
-templateDir = path.join(__dirname, 'templates'),
-templates = fs.readdirSync(templateDir);
-
-for (var i in templates){
-  template = templates[i];
-  if(path.extname(template) !== '.dust') {
-    continue;
-  }
-  templateName = path.basename(template, '.dust');
-  dust.loadSource(dust.compile(fs.readFileSync(path.join(templateDir, template), 'utf8'), templateName));
-}
+duster.prime(path.join(__dirname, 'templates'));
 
 // ### Process files and generate documentation
 // A config object passed to the dockit function contains a glob match for all the
