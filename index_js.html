@@ -28,7 +28,7 @@
  using github flavored markdown, passing code highlight
  callbacks to <code>highlight.js</code></p>
 <p> A Dust instance is configured and templates loaded and compiled to be used to generate HTML files.</p>
-<p> All templates from <code>templates</code> directory are compiled into the <code>dust.cache</code>
+<p> All templates from <code>templates</code> directory are compiled into the <code>dust.cache</code> via <a href="https://github.com/diffsky/noddocco">duster</a>
  - preserving any whitespace in the templates by using a format optimizer.</p>
 </div>
     </td>
@@ -38,7 +38,8 @@
 <span class="keyword">var</span> noddocco = require(<span class="string">"noddocco"</span>),
 path = require(<span class="string">'path'</span>),
 fs = require(<span class="string">'fs'</span>),
-dust = require(<span class="string">'dustjs-helpers'</span>),
+duster = require(<span class="string">'duster'</span>),
+dust = duster.dust,
 ncp = require(<span class="string">'ncp'</span>).ncp,
 marked = require(<span class="string">'marked'</span>),
 hl = require(<span class="string">'highlight.js'</span>),
@@ -58,19 +59,7 @@ marked.setOptions({
 });
 
 dust.optimizers.format = <span class="keyword">function</span>(ctx, node) {<span class="keyword">return</span> node;};
-
-<span class="keyword">var</span> template,
-templateDir = path.join(__dirname, <span class="string">'templates'</span>),
-templates = fs.readdirSync(templateDir);
-
-<span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> templates){
-  template = templates[i];
-  <span class="keyword">if</span>(path.extname(template) !== <span class="string">'.dust'</span>) {
-    <span class="keyword">continue</span>;
-  }
-  templateName = path.basename(template, <span class="string">'.dust'</span>);
-  dust.loadSource(dust.compile(fs.readFileSync(path.join(templateDir, template), <span class="string">'utf8'</span>), templateName));
-}
+duster.prime(path.join(__dirname, <span class="string">'templates'</span>));
 </pre></code></div>
     </td>
 </tr>
@@ -361,7 +350,7 @@ module.exports = <span class="keyword">function</span>(config) {
   </ol>
   
 
-  <p id="generated">generated Fri Sep 06 2013 00:26:36 GMT-0700 (PDT)</p>
+  <p id="generated">generated Sat Sep 07 2013 20:43:11 GMT-0700 (PDT)</p>
 </div>
 
 </body>
