@@ -10,7 +10,7 @@ intermingled with your code, for your entire project.
 All prose is passed through Markdown, and code is passed through Highlight.js syntax highlighting.
 This page is the result of running Dockit against its own source files.
 
-Dockit source is [available on github](http://diffsky.github.io/dockit)
+Dockit source is [available on github](https://github.com/diffsky/dockit)
 
 ## Installation
 
