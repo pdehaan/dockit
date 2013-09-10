@@ -83,6 +83,7 @@ module.exports = function(config) {
   }
   process.chdir(owd);
 
+  config.assets = config.assets || [];
   config.assets.forEach(function(asset){
     ncp(path.join(config.configDir, asset), path.join(config.outputAbsolute, '__assets', path.basename(asset)), function (err) {
       if (err) {
