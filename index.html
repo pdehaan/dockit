@@ -217,6 +217,7 @@ module.exports = <span class="keyword">function</span>(config) {
   }
   process.chdir(owd);
 
+  config.assets = config.assets || [];
   config.assets.forEach(<span class="keyword">function</span>(asset){
     ncp(path.join(config.configDir, asset), path.join(config.outputAbsolute, <span class="string">'__assets'</span>, path.basename(asset)), <span class="function"><span class="keyword">function</span> <span class="params">(err)</span> {</span>
       <span class="keyword">if</span> (err) {
@@ -457,7 +458,7 @@ module.exports = <span class="keyword">function</span>(config) {
   </ol>
   
 
-  <p id="generated">generated Sat Sep 07 2013 20:45:46 GMT-0700 (PDT)</p>
+  <p id="generated">generated Tue Sep 10 2013 10:14:06 GMT-0700 (PDT)</p>
 </div>
 
 </body>
