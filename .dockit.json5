@@ -55,6 +55,8 @@
     ],
     "second": [
       "**/*.{js,md}",
+      "!gulpfile.js",
+      "!gulp/**/*.js",
       "!README.md",
       "!node_modules/**",
       "!docs/**",

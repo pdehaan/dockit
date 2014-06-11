@@ -19,63 +19,37 @@
 
 
 
-<tr id="gulpfile_js-s1" class="section">
+<tr id="gulp_eslint_js-s1" class="section">
   <td class="comments">
-    <a class="github" href="https://github.com/diffsky/dockit/blob/master/gulpfile.js">github</a>
+    <a class="github" href="https://github.com/diffsky/dockit/blob/master/gulp/eslint.js">github</a>
     <div class="con"></div>
   </td>
   <td class="code">
-    <div class="con"><pre class="hifile"><code><span class="comment">/*eslint no-process-exit:0 */</span>
-<span class="string">'use strict'</span>;
+    <div class="con"><pre class="hifile"><code><span class="string">'use strict'</span>;
 
-<span class="keyword">var</span> gulp = require(<span class="string">'gulp'</span>);
-<span class="keyword">var</span> path = require(<span class="string">'path'</span>);
-<span class="keyword">var</span> parseArgs = require(<span class="string">'minimist'</span>);
-<span class="keyword">var</span> Confidence = require(<span class="string">'confidence'</span>);
+<span class="keyword">var</span> eslint = require(<span class="string">'gulp-eslint'</span>);
 
-<span class="keyword">var</span> conf = {
-  build: <span class="keyword">new</span> Confidence.Store(require(<span class="string">'./conf/build'</span>)),
-  args: parseArgs(process.argv.slice(<span class="number">2</span>)),
-  gwd: __dirname
+module.exports = <span class="keyword">function</span>(gulp, conf) {
+  gulp.task(<span class="string">'eslint'</span>, <span class="keyword">function</span>() {
+    <span class="keyword">return</span> gulp.src(conf.build.get(<span class="string">'/lint'</span>))
+      .pipe(eslint())
+      .pipe(eslint.format())
+      .pipe(eslint.failOnError())
+      .on(<span class="string">'error'</span>, <span class="keyword">function</span>() {</pre></code></div>
+  </td>
+</tr>
+
+<tr id="gulp_eslint_js-s2" class="section">
+  <td class="comments">
+    
+    <div class="con"><p> record that there have been errors</p>
+</div>
+  </td>
+  <td class="code">
+    <div class="con"><pre class="hifile"><code>        gulp.fail = <span class="literal">true</span>;
+      });
+  });
 };
-</pre></code></div>
-  </td>
-</tr>
-
-<tr id="gulpfile_js-s2" class="section">
-  <td class="comments">
-    
-    <div class="con"><p> combine all the gulp tasks</p>
-</div>
-  </td>
-  <td class="code">
-    <div class="con"><pre class="hifile"><code>require(<span class="string">'fs'</span>).readdirSync(<span class="string">'./gulp'</span>).forEach(<span class="keyword">function</span>(file) {
-  <span class="keyword">if</span> (path.extname(file) === <span class="string">'.js'</span>) {
-    require(<span class="string">'./gulp/'</span> + file)(gulp, conf);
-  }
-});
-
-gulp.task(<span class="string">'default'</span>, <span class="keyword">function</span>() {
-  console.log(<span class="string">'gulp!'</span>);
-});
-
-gulp.task(<span class="string">'test'</span>, [<span class="string">'eslint'</span>, <span class="string">'js-beautify'</span>], <span class="keyword">function</span>() {});
-
-process.on(<span class="string">'exit'</span>, <span class="keyword">function</span>() {
-  <span class="keyword">if</span> (gulp.fail) {</pre></code></div>
-  </td>
-</tr>
-
-<tr id="gulpfile_js-s3" class="section">
-  <td class="comments">
-    
-    <div class="con"><p> return non-zero exit code</p>
-</div>
-  </td>
-  <td class="code">
-    <div class="con"><pre class="hifile"><code>    process.exit(<span class="number">1</span>);
-  }
-});
 </pre></code></div>
   </td>
 </tr>
@@ -107,7 +81,7 @@ process.on(<span class="string">'exit'</span>, <span class="keyword">function</s
     </a>
     
     <a class="nav-item nav-gulp_eslint_js" href="gulp_eslint_js.html?menu=1&amp;file=1">
-      <li >
+      <li class="active">
         <span class="dir">gulp/</span>
         <span class="file">eslint.js</span>
       </li>
@@ -121,7 +95,7 @@ process.on(<span class="string">'exit'</span>, <span class="keyword">function</s
     </a>
     
     <a class="nav-item nav-gulpfile_js" href="gulpfile_js.html?menu=1&amp;file=1">
-      <li class="active">
+      <li >
         <span class="dir">/</span>
         <span class="file">gulpfile.js</span>
       </li>
@@ -170,7 +144,7 @@ process.on(<span class="string">'exit'</span>, <span class="keyword">function</s
   </ol>
   
 
-  <p id="generated">generated Tue Jun 10 2014 17:23:01 GMT-0700 (PDT)</p>
+  <p id="generated">generated Tue Jun 10 2014 17:36:37 GMT-0700 (PDT)</p>
 </div>
 
 
