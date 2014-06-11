@@ -6,22 +6,33 @@
   <script src="__assets/libs.js"></script>
   <script src="__assets/main.js"></script>
   <link rel="shortcut icon" href="__assets/dockit.png">
-  <title>ockit</title>
+  <title>Dockit</title>
 </head>
 <body>
 <div id="container">
   <div class="docs docs-full transformer">
     <span class="ctrl ctrl-nav transformer" >☰</span>
     <span class="ctrl-code ctrl active">code</span>
-    
+
+
 <table class="dockit">
 
 
 
 <tr id="index_js-s1" class="section">
-    <td class="comments">
-        <a class="github" href="https://github.com/diffsky/dockit/blob/master/index.js">github</a>
-        <div class="con"><h2>Dockit Lib</h2>
+  <td class="comments">
+    <a class="github" href="https://github.com/diffsky/dockit/blob/master/index.js">github</a>
+    <div class="con"></div>
+  </td>
+  <td class="code">
+    <div class="con"><pre class="hifile"><code><span class="string">'use strict'</span>;</pre></code></div>
+  </td>
+</tr>
+
+<tr id="index_js-s2" class="section">
+  <td class="comments">
+    
+    <div class="con"><h2>Dockit Lib</h2>
 <p> Require the necessary libraries.
  Actual file parsing for code and comments is handled by the <a href="https://github.com/diffsky/noddocco">noddocco</a> lib.</p>
 <p> A marked instance is configured tp parse strings as markdown
@@ -31,43 +42,52 @@
 <p> All templates from <code>templates</code> directory are compiled into the <code>dust.cache</code> via <a href="https://github.com/diffsky/noddocco">duster</a>
  - preserving any whitespace in the templates by using a format optimizer.</p>
 </div>
-    </td>
-    <td class="code">
-        <div class="con"><pre class="hifile"><code>
-<span class="comment">/* jshint loopfunc: true, unused: false */</span>
-<span class="keyword">var</span> noddocco = require(<span class="string">"noddocco"</span>),
-path = require(<span class="string">'path'</span>),
-fs = require(<span class="string">'fs'</span>),
-duster = require(<span class="string">'duster'</span>),
-dust = duster.dust,
-ncp = require(<span class="string">'ncp'</span>).ncp,
-marked = require(<span class="string">'marked'</span>),
-hl = require(<span class="string">'highlight.js'</span>),
-expand = require(<span class="string">'glob-expand'</span>),
-mkdirp = require(<span class="string">'mkdirp'</span>);
+  </td>
+  <td class="code">
+    <div class="con"><pre class="hifile"><code>
+<span class="keyword">var</span> noddocco = require(<span class="string">'noddocco'</span>);
+<span class="keyword">var</span> path = require(<span class="string">'path'</span>);
+<span class="keyword">var</span> fs = require(<span class="string">'fs'</span>);
+<span class="keyword">var</span> ncp = require(<span class="string">'ncp'</span>).ncp;
+<span class="keyword">var</span> hl = require(<span class="string">'highlight.js'</span>);
+<span class="keyword">var</span> expand = require(<span class="string">'glob-expand'</span>);
+<span class="keyword">var</span> mkdirp = require(<span class="string">'mkdirp'</span>);
 
+<span class="keyword">var</span> ejstpl = require(<span class="string">'ejstpl'</span>);
+<span class="keyword">var</span> tpl = ejstpl({
+  cwd: path.join(__dirname, <span class="string">'templates'</span>)
+});
+</pre></code></div>
+  </td>
+</tr>
+
+<tr id="index_js-s3" class="section">
+  <td class="comments">
+    
+    <div class="con"><p> dockit note version 0.2.10 started automatically addings id attributes to headings which broke dockit&#39;s parsing </p>
+</div>
+  </td>
+  <td class="code">
+    <div class="con"><pre class="hifile"><code><span class="keyword">var</span> marked = require(<span class="string">'marked'</span>);
 marked.setOptions({
   gfm: <span class="literal">true</span>,
   pedantic: <span class="literal">false</span>,
   sanitize: <span class="literal">false</span>,
   highlight: <span class="keyword">function</span>(code, lang) {
-    <span class="keyword">if</span>(lang === <span class="literal">undefined</span>) {
+    <span class="keyword">if</span> (lang === <span class="literal">undefined</span>) {
       <span class="keyword">return</span> code;
     }
     <span class="keyword">return</span> hl.highlight(lang, code).value;
   }
 });
-
-dust.optimizers.format = <span class="keyword">function</span>(ctx, node) {<span class="keyword">return</span> node;};
-duster.prime(path.join(__dirname, <span class="string">'templates'</span>));
 </pre></code></div>
-    </td>
+  </td>
 </tr>
 
-<tr id="index_js-s2" class="section">
-    <td class="comments">
-        
-        <div class="con"><h3>Process files and generate documentation</h3>
+<tr id="index_js-s4" class="section">
+  <td class="comments">
+    
+    <div class="con"><h3>Process files and generate documentation</h3>
 <p> A config object passed to the dockit function contains a glob match for all the
  files to be processed. These matches can be split into sections allowing for finer control
  over the order in which files are processed and then displayed.</p>
@@ -80,50 +100,54 @@ duster.prime(path.join(__dirname, <span class="string">'templates'</span>));
  comment and code properties for the parsed file. The comment section is checked for
  any <code>h1</code>, <code>h2</code> and <code>h3</code> headings (as above) to be added to the pages navigation.</p>
 </div>
-    </td>
-    <td class="code">
-        <div class="con"><pre class="hifile"><code><span class="keyword">var</span> blocks = {}, pages = {}, files = [],
-dir, fileRepo, key, comment, page, details, ext, input, foundsection;
+  </td>
+  <td class="code">
+    <div class="con"><pre class="hifile"><code><span class="keyword">var</span> blocks = {},
+  pages = {},
+  files = [],
+  dir, fileRepo, key, comment, page, details, ext, input, foundsection;
 
-<span class="function"><span class="keyword">function</span> <span class="title">anchorize</span><span class="params">(match, p1, p2, offset, string)</span>{</span>
-  <span class="keyword">return</span> <span class="string">'&lt;/div&gt;&lt;div id="'</span>+key+<span class="string">'-s'</span>+(foundsection++)+<span class="string">'" class="section md"&gt;&lt;h'</span>+p1+<span class="string">'&gt;'</span>+p2+<span class="string">'&lt;/h'</span>+p1+<span class="string">'&gt;'</span>;
+<span class="function"><span class="keyword">function</span> <span class="title">anchorize</span><span class="params">(match, p1, p2, offset, string)</span> {</span>
+  <span class="keyword">return</span> <span class="string">'&lt;/div&gt;&lt;div id="'</span> + key + <span class="string">'-s'</span> + (foundsection++) + <span class="string">'" class="section md"&gt;&lt;h'</span> + p1 + <span class="string">'&gt;'</span> + p2 + <span class="string">'&lt;/h'</span> + p1 + <span class="string">'&gt;'</span>;
 }
 
 module.exports = <span class="keyword">function</span>(config) {
   <span class="keyword">var</span> opts = {},
-      owd = process.cwd();
+    owd = process.cwd();
 
-  <span class="keyword">if</span>(!fs.existsSync(config.outputAbsolute)) {
+  <span class="keyword">if</span> (!fs.existsSync(config.outputAbsolute)) {
     mkdirp.sync(config.outputAbsolute);
   }
-  ncp(path.join(__dirname, <span class="string">'assets'</span>), path.join(config.outputAbsolute, <span class="string">'__assets'</span>), <span class="function"><span class="keyword">function</span> <span class="params">(err)</span> {</span>
+  ncp(path.join(__dirname, <span class="string">'assets'</span>), path.join(config.outputAbsolute, <span class="string">'__assets'</span>), <span class="keyword">function</span>(err) {
     <span class="keyword">if</span> (err) {
       console.log(err);
     }
   });
   <span class="keyword">var</span> matches = [];
   process.chdir(config.configDir);
-  <span class="keyword">for</span>(<span class="keyword">var</span> section <span class="keyword">in</span> config.files){
-    expand({filter: <span class="string">'isFile'</span>}, config.files[section]).forEach(<span class="keyword">function</span>(f){
+  <span class="keyword">for</span> (<span class="keyword">var</span> section <span class="keyword">in</span> config.files) {
+    expand({
+      filter: <span class="string">'isFile'</span>
+    }, config.files[section]).forEach(<span class="keyword">function</span>(f) {
       matches.push(path.join(config.configDir, f));
     });
   }
   process.chdir(owd);
 
   config.assets = config.assets || [];
-  config.assets.forEach(<span class="keyword">function</span>(asset){
-    ncp(path.join(config.configDir, asset), path.join(config.outputAbsolute, <span class="string">'__assets'</span>, path.basename(asset)), <span class="function"><span class="keyword">function</span> <span class="params">(err)</span> {</span>
+  config.assets.forEach(<span class="keyword">function</span>(asset) {
+    ncp(path.join(config.configDir, asset), path.join(config.outputAbsolute, <span class="string">'__assets'</span>, path.basename(asset)), <span class="keyword">function</span>(err) {
       <span class="keyword">if</span> (err) {
         console.log(err);
       }
     });
   });
 
-  matches.forEach(<span class="keyword">function</span>(file){
+  matches.forEach(<span class="keyword">function</span>(file) {
     ext = path.extname(file).slice(<span class="number">1</span>);
     input = fs.readFileSync(file, <span class="string">'utf8'</span>);
     fileRepo = path.relative(process.cwd(), file);
-    key = fileRepo.replace(<span class="regexp">/\//g</span>, <span class="string">"_"</span>).replace(<span class="regexp">/\./g</span>, <span class="string">"_"</span>).toLowerCase();
+    key = fileRepo.replace(<span class="regexp">/\//g</span>, <span class="string">'_'</span>).replace(<span class="regexp">/\./g</span>, <span class="string">'_'</span>).toLowerCase();
     dir = path.dirname(path.relative(process.cwd(), file)).toLowerCase();
     <span class="keyword">if</span> (dir === <span class="string">'.'</span>) {
       dir = <span class="string">''</span>;
@@ -134,12 +158,12 @@ module.exports = <span class="keyword">function</span>(config) {
       dir: dir,
       key: key
     });
-    <span class="keyword">if</span>(ext === <span class="string">'md'</span>){
+    <span class="keyword">if</span> (ext === <span class="string">'md'</span>) {
       foundsection = <span class="number">1</span>;
       <span class="keyword">var</span> i = <span class="number">1</span>;
       input = marked(input);
       page = input.match(<span class="regexp">/&lt;h([1-3])&gt;(.*)&lt;\/h[1-3]&gt;/gi</span>);
-      <span class="keyword">for</span>(<span class="keyword">var</span> j <span class="keyword">in</span> page){
+      <span class="keyword">for</span> (<span class="keyword">var</span> j <span class="keyword">in</span> page) {
         details = {
           page: page[j].match(<span class="regexp">/&lt;h[1-3]&gt;(.*)&lt;\/h[1-3]&gt;/</span>)[<span class="number">1</span>],
           section: i++,
@@ -163,38 +187,52 @@ module.exports = <span class="keyword">function</span>(config) {
       opts.ctypes = config.ctypes;
       opts.encode = <span class="literal">false</span>;
       opts.ignores = config.ignores || {};
-      noddocco.process(input, opts, <span class="function"><span class="keyword">function</span> <span class="params">(err, noddoccoData)</span> {</span>
-        blocks[key] = {
-          file: file,
-          fileRepo: fileRepo,
-          key: key,
-          blocks: noddoccoData
-        };
-        <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> noddoccoData){
-          comment = noddoccoData[i].comments;
-          page = comment.match(<span class="regexp">/&lt;h([1-3])&gt;(.*)&lt;\/h[1-3]&gt;/i</span>);
-          <span class="keyword">if</span>(page) {
-            details = {
-              page: page[<span class="number">2</span>],
-              section: (+i + <span class="number">1</span>),
-              h: page[<span class="number">1</span>],
-              key: key
-            };
-            pages[key] = pages[key] || [];
-            pages[key].push(details);
+      noddocco.process(input, opts, <span class="keyword">function</span>(err, noddoccoData) {
+        <span class="keyword">if</span> (err) {
+          console.log(err);
+        } <span class="keyword">else</span> {
+          blocks[key] = {
+            file: file,
+            fileRepo: fileRepo,
+            key: key,
+            blocks: noddoccoData
+          };
+          <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> noddoccoData) {
+            comment = noddoccoData[i].comments;
+            page = comment.match(<span class="regexp">/&lt;h([1-3])&gt;(.*)&lt;\/h[1-3]&gt;/i</span>);</pre></code></div>
+  </td>
+</tr>
+
+<tr id="index_js-s5" class="section">
+  <td class="comments">
+    
+    <div class="con"><p> console.log(page);</p>
+</div>
+  </td>
+  <td class="code">
+    <div class="con"><pre class="hifile"><code>            <span class="keyword">if</span> (page) {
+              details = {
+                page: page[<span class="number">2</span>],
+                section: (+i + <span class="number">1</span>),
+                h: page[<span class="number">1</span>],
+                key: key
+              };
+              pages[key] = pages[key] || [];
+              pages[key].push(details);
+            }
           }
         }
       });
     }
   });
 </pre></code></div>
-    </td>
+  </td>
 </tr>
 
-<tr id="index_js-s3" class="section">
-    <td class="comments">
-        
-        <div class="con"><h3>Write the documentation to disk</h3>
+<tr id="index_js-s6" class="section">
+  <td class="comments">
+    
+    <div class="con"><h3>Write the documentation to disk</h3>
 <p> With the noddocco data generated for each file. Loop through the files and
  write their contents to disk.</p>
 <p> By default, alongised individual file pages, Dockit will create a page which is all
@@ -202,34 +240,34 @@ module.exports = <span class="keyword">function</span>(config) {
  This behaviour can be altered by the dockit configuration</p>
 <p> As the files are written to disk the progress is sent to the console.</p>
 </div>
-    </td>
-    <td class="code">
-        <div class="con"><pre class="hifile"><code>  <span class="keyword">var</span> displaypages = [];
+  </td>
+  <td class="code">
+    <div class="con"><pre class="hifile"><code>  <span class="keyword">var</span> displaypages = [];
   <span class="keyword">var</span> orderedblocks = [];
 
-  <span class="keyword">for</span>(<span class="keyword">var</span> i <span class="keyword">in</span> pages){
+  <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> pages) {
     orderedblocks.push(blocks[pages[i][<span class="number">0</span>].key]);
-    <span class="keyword">for</span> (<span class="keyword">var</span> j <span class="keyword">in</span> pages[i]){
+    <span class="keyword">for</span> (<span class="keyword">var</span> j <span class="keyword">in</span> pages[i]) {
       displaypages.push(pages[i][j]);
     }
   }
 
   console.log(<span class="string">'writing...'</span>);
   config.project = config.project || <span class="string">'dockit generated docs'</span>;
-  <span class="keyword">var</span> all, dest,
-      generated = <span class="keyword">new</span> Date();
+  <span class="keyword">var</span> all, dest, data, output,
+    generated = <span class="keyword">new</span> Date();
 
   all = <span class="string">'all.html'</span>;
-  <span class="keyword">if</span>(config.index === <span class="string">'all.html'</span>){
+  <span class="keyword">if</span> (config.index === <span class="string">'all.html'</span>) {
     config.index = <span class="string">'index.html'</span>;
     all = <span class="string">'index.html'</span>;
   }
 
-  <span class="keyword">for</span> (i <span class="keyword">in</span> blocks){
+  <span class="keyword">for</span> (i <span class="keyword">in</span> blocks) {
     dest = blocks[i].key + <span class="string">'.html'</span>;
-
-    dust.render(<span class="string">'file'</span>, {
-      md: blocks[i].md,
+    data = {
+      onAll: <span class="literal">false</span>,
+      md: blocks[i].md || <span class="literal">false</span>,
       title: config.project,
       index: config.index,
       github: config.github,
@@ -241,21 +279,22 @@ module.exports = <span class="keyword">function</span>(config) {
       favicon: config.favicon,
       generated: generated,
       pages: displaypages,
-      data: blocks[i]},
-      <span class="keyword">function</span>(err, output){
-        <span class="keyword">if</span>(dest === config.index) {
-          dest = <span class="string">'index.html'</span>;
-        } <span class="keyword">else</span> <span class="keyword">if</span> (dest.slice(<span class="number">0</span>, <span class="number">6</span>) === <span class="string">'readme'</span>){
-          fs.writeFileSync(path.join(config.outputAbsolute,<span class="string">'index.html'</span>), output);
-        }
-        fs.writeFileSync(path.join(config.outputAbsolute, dest), output);
-        console.log(path.join(config.output, dest));
-      });
+      data: [blocks[i]]
+    };
+    output = tpl.main(data);
+    <span class="keyword">if</span> (dest === config.index) {
+      dest = <span class="string">'index.html'</span>;
+    } <span class="keyword">else</span> <span class="keyword">if</span> (dest.slice(<span class="number">0</span>, <span class="number">6</span>) === <span class="string">'readme'</span>) {
+      fs.writeFileSync(path.join(config.outputAbsolute, <span class="string">'index.html'</span>), output);
+    }
+    fs.writeFileSync(path.join(config.outputAbsolute, dest), output);
+    console.log(path.join(config.outputAbsolute, dest));
   }
 
-  <span class="keyword">if</span>(config.all) {
-    dust.render(<span class="string">'file'</span>, {
+  <span class="keyword">if</span> (config.all) {
+    data = {
       all: all,
+      md: <span class="literal">false</span>,
       allHash: config.allHash,
       onAll: <span class="literal">true</span>,
       title: config.project,
@@ -266,24 +305,21 @@ module.exports = <span class="keyword">function</span>(config) {
       favicon: config.favicon,
       generated: generated,
       pages: displaypages,
-      data: orderedblocks},
-      <span class="keyword">function</span>(err, output){
-        fs.writeFileSync(path.join(config.outputAbsolute, all), output);
-        console.log(path.join(config.output, all));
-      });
+      data: orderedblocks
+    };
+    output = tpl.main(data);
+    fs.writeFileSync(path.join(config.outputAbsolute, all), output);
+    console.log(path.join(config.output, all));
   }
+
   console.log(<span class="string">'...done!'</span>);
 };
 </pre></code></div>
-    </td>
+  </td>
 </tr>
 
 
-
 </table>
-
-  </div>
-</div>
 <div class="nav transformer nav-hide">
 
   <span class="ctrl-pages ctrl ctrl-hide transformer">pages</span>
@@ -336,25 +372,26 @@ module.exports = <span class="keyword">function</span>(config) {
       <li class="h2" >Configuration</li>
     </a>
     
-    <a class="nav-item nav-index_js-s1" href="index.html?menu=1#index_js-s1">
+    <a class="nav-item nav-index_js-s2" href="index.html?menu=1#index_js-s2">
       <li class="h2" >Dockit Lib</li>
     </a>
     
-    <a class="nav-item nav-index_js-s2" href="index.html?menu=1#index_js-s2">
+    <a class="nav-item nav-index_js-s4" href="index.html?menu=1#index_js-s4">
       <li class="h3" >Process files and generate documentation</li>
     </a>
     
-    <a class="nav-item nav-index_js-s3" href="index.html?menu=1#index_js-s3">
+    <a class="nav-item nav-index_js-s6" href="index.html?menu=1#index_js-s6">
       <li class="h3" >Write the documentation to disk</li>
     </a>
     
   </ol>
   
 
-  <p id="generated">generated Tue Sep 10 2013 10:14:06 GMT-0700 (PDT)</p>
+  <p id="generated">generated Tue Jun 10 2014 17:43:51 GMT-0700 (PDT)</p>
 </div>
+
+
 
 </body>
 </html>
-
 

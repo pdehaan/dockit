@@ -6,34 +6,35 @@
   <script src="__assets/libs.js"></script>
   <script src="__assets/main.js"></script>
   <link rel="shortcut icon" href="__assets/dockit.png">
-  <title>ockit</title>
+  <title>Dockit</title>
 </head>
 <body>
 <div id="container">
   <div class="docs docs-full transformer">
     <span class="ctrl ctrl-nav transformer" >☰</span>
     <span class="ctrl-code ctrl active">code</span>
-    
+
+
 <table class="dockit">
 
 
 
 <tr id="_dockit_json5-s1" class="section">
-    <td class="comments">
-        <a class="github" href="https://github.com/diffsky/dockit/blob/master/.dockit.json5">github</a>
-        <div class="con"><h2>Configuration</h2>
+  <td class="comments">
+    <a class="github" href="https://github.com/diffsky/dockit/blob/master/.dockit.json5">github</a>
+    <div class="con"><h2>Configuration</h2>
 <p> Dockit relies on a json5 configuration file to tell it how to parse a project</p>
 </div>
-    </td>
-    <td class="code">
-        <div class="con"><pre class="hifile"><code></pre></code></div>
-    </td>
+  </td>
+  <td class="code">
+    <div class="con"><pre class="hifile"><code></pre></code></div>
+  </td>
 </tr>
 
 <tr id="_dockit_json5-s2" class="section">
-    <td class="comments">
-        
-        <div class="con"><p> <em>project</em>: Project name</p>
+  <td class="comments">
+    
+    <div class="con"><p> <em>project</em>: Project name</p>
 <p> <em>github</em>: url and text to display for github repo link</p>
 <p> <em>assets</em>: an array of filenames in the project to copy to the <code>__assets</code> directory to
  be available in the generated documentation, such as the favicon image. Assets copied
@@ -60,10 +61,10 @@
  set to true, this will point to the all page.</p>
 <p> <em>allHash</em>: add an optional hash to the url for the all page (to link to an anchor)</p>
 </div>
-    </td>
-    <td class="code">
-        <div class="con"><pre class="hifile"><code>{
-  <span class="string">"project"</span>: <span class="string">"ockit"</span>,
+  </td>
+  <td class="code">
+    <div class="con"><pre class="hifile"><code>{
+  <span class="string">"project"</span>: <span class="string">"Dockit"</span>,
   <span class="string">"github"</span> : {
     <span class="string">"url"</span> : <span class="string">"https://github.com/diffsky/dockit"</span>,
     <span class="string">"text"</span> : <span class="string">"github"</span>
@@ -77,6 +78,8 @@
     ],
     <span class="string">"second"</span>: [
       <span class="string">"**/*.{js,md}"</span>,
+      <span class="string">"!gulpfile.js"</span>,
+      <span class="string">"!gulp/**/*.js"</span>,
       <span class="string">"!README.md"</span>,
       <span class="string">"!node_modules/**"</span>,
       <span class="string">"!docs/**"</span>,
@@ -86,20 +89,16 @@
   },
   <span class="string">"ctypes"</span>: [<span class="string">"BRACKET_BANG"</span>],
   <span class="string">"ignores"</span>: [
-    <span class="string">"/* jshint"</span>
+    <span class="string">"/*eslint"</span>
   ],
   <span class="string">"allHash"</span> : <span class="string">"#readme_md-s1"</span>
 }
 </pre></code></div>
-    </td>
+  </td>
 </tr>
 
 
-
 </table>
-
-  </div>
-</div>
 <div class="nav transformer nav-hide">
 
   <span class="ctrl-pages ctrl ctrl-hide transformer">pages</span>
@@ -152,25 +151,26 @@
       <li class="h2" >Configuration</li>
     </a>
     
-    <a class="nav-item nav-index_js-s1" href="index.html?menu=1#index_js-s1">
+    <a class="nav-item nav-index_js-s2" href="index.html?menu=1#index_js-s2">
       <li class="h2" >Dockit Lib</li>
     </a>
     
-    <a class="nav-item nav-index_js-s2" href="index.html?menu=1#index_js-s2">
+    <a class="nav-item nav-index_js-s4" href="index.html?menu=1#index_js-s4">
       <li class="h3" >Process files and generate documentation</li>
     </a>
     
-    <a class="nav-item nav-index_js-s3" href="index.html?menu=1#index_js-s3">
+    <a class="nav-item nav-index_js-s6" href="index.html?menu=1#index_js-s6">
       <li class="h3" >Write the documentation to disk</li>
     </a>
     
   </ol>
   
 
-  <p id="generated">generated Tue Sep 10 2013 10:14:06 GMT-0700 (PDT)</p>
+  <p id="generated">generated Tue Jun 10 2014 17:43:51 GMT-0700 (PDT)</p>
 </div>
+
+
 
 </body>
 </html>
-
 
