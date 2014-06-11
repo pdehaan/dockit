@@ -154,7 +154,6 @@ module.exports = function(config) {
           for (var i in noddoccoData) {
             comment = noddoccoData[i].comments;
             page = comment.match(/<h([1-3])>(.*)<\/h[1-3]>/i);
-            // console.log(page);
             if (page) {
               details = {
                 page: page[2],
