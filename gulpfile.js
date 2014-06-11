@@ -23,7 +23,7 @@ gulp.task('default', function() {
   console.log('gulp!');
 });
 
-gulp.task('test', ['eslint', 'js-beautify'], function() {});
+gulp.task('lint', ['eslint', 'js-beautify'], function() {});
 
 process.on('exit', function() {
   if (gulp.fail) {

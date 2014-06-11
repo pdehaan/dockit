@@ -34,7 +34,7 @@ marked.setOptions({
   pedantic: false,
   sanitize: false,
   highlight: function(code, lang) {
-    if(lang === undefined) {
+    if (lang === undefined) {
       return code;
     }
     return hl.highlight(lang, code).value;
@@ -56,44 +56,48 @@ marked.setOptions({
 // Other files are passed to `noddocco` to be processed, with returns an object with
 // comment and code properties for the parsed file. The comment section is checked for
 // any `h1`, `h2` and `h3` headings (as above) to be added to the pages navigation.
-var blocks = {}, pages = {}, files = [],
-dir, fileRepo, key, comment, page, details, ext, input, foundsection;
+var blocks = {},
+  pages = {},
+  files = [],
+  dir, fileRepo, key, comment, page, details, ext, input, foundsection;
 
-function anchorize(match, p1, p2, offset, string){
+function anchorize(match, p1, p2, offset, string) {
   return '</div><div id="' + key + '-s' + (foundsection++) + '" class="section md"><h' + p1 + '>' + p2 + '</h' + p1 + '>';
 }
 
 module.exports = function(config) {
   var opts = {},
-      owd = process.cwd();
+    owd = process.cwd();
 
-  if(!fs.existsSync(config.outputAbsolute)) {
+  if (!fs.existsSync(config.outputAbsolute)) {
     mkdirp.sync(config.outputAbsolute);
   }
-  ncp(path.join(__dirname, 'assets'), path.join(config.outputAbsolute, '__assets'), function (err) {
+  ncp(path.join(__dirname, 'assets'), path.join(config.outputAbsolute, '__assets'), function(err) {
     if (err) {
       console.log(err);
     }
   });
   var matches = [];
   process.chdir(config.configDir);
-  for(var section in config.files){
-    expand({filter: 'isFile'}, config.files[section]).forEach(function(f){
+  for (var section in config.files) {
+    expand({
+      filter: 'isFile'
+    }, config.files[section]).forEach(function(f) {
       matches.push(path.join(config.configDir, f));
     });
   }
   process.chdir(owd);
 
   config.assets = config.assets || [];
-  config.assets.forEach(function(asset){
-    ncp(path.join(config.configDir, asset), path.join(config.outputAbsolute, '__assets', path.basename(asset)), function (err) {
+  config.assets.forEach(function(asset) {
+    ncp(path.join(config.configDir, asset), path.join(config.outputAbsolute, '__assets', path.basename(asset)), function(err) {
       if (err) {
         console.log(err);
       }
     });
   });
 
-  matches.forEach(function(file){
+  matches.forEach(function(file) {
     ext = path.extname(file).slice(1);
     input = fs.readFileSync(file, 'utf8');
     fileRepo = path.relative(process.cwd(), file);
@@ -108,12 +112,12 @@ module.exports = function(config) {
       dir: dir,
       key: key
     });
-    if(ext === 'md'){
+    if (ext === 'md') {
       foundsection = 1;
       var i = 1;
       input = marked(input);
       page = input.match(/<h([1-3])>(.*)<\/h[1-3]>/gi);
-      for(var j in page){
+      for (var j in page) {
         details = {
           page: page[j].match(/<h[1-3]>(.*)<\/h[1-3]>/)[1],
           section: i++,
@@ -137,7 +141,7 @@ module.exports = function(config) {
       opts.ctypes = config.ctypes;
       opts.encode = false;
       opts.ignores = config.ignores || {};
-      noddocco.process(input, opts, function (err, noddoccoData) {
+      noddocco.process(input, opts, function(err, noddoccoData) {
         if (err) {
           console.log(err);
         } else {
@@ -147,11 +151,11 @@ module.exports = function(config) {
             key: key,
             blocks: noddoccoData
           };
-          for (var i in noddoccoData){
+          for (var i in noddoccoData) {
             comment = noddoccoData[i].comments;
             page = comment.match(/<h([1-3])>(.*)<\/h[1-3]>/i);
             // console.log(page);
-            if(page) {
+            if (page) {
               details = {
                 page: page[2],
                 section: (+i + 1),
@@ -179,9 +183,9 @@ module.exports = function(config) {
   var displaypages = [];
   var orderedblocks = [];
 
-  for(var i in pages){
+  for (var i in pages) {
     orderedblocks.push(blocks[pages[i][0].key]);
-    for (var j in pages[i]){
+    for (var j in pages[i]) {
       displaypages.push(pages[i][j]);
     }
   }
@@ -189,15 +193,15 @@ module.exports = function(config) {
   console.log('writing...');
   config.project = config.project || 'dockit generated docs';
   var all, dest, data, output,
-      generated = new Date();
+    generated = new Date();
 
   all = 'all.html';
-  if(config.index === 'all.html'){
+  if (config.index === 'all.html') {
     config.index = 'index.html';
     all = 'index.html';
   }
 
-  for (i in blocks){
+  for (i in blocks) {
     dest = blocks[i].key + '.html';
     data = {
       onAll: false,
@@ -216,17 +220,16 @@ module.exports = function(config) {
       data: [blocks[i]]
     };
     output = tpl.main(data);
-    if(dest === config.index) {
+    if (dest === config.index) {
       dest = 'index.html';
-    } else if (dest.slice(0, 6) === 'readme'){
-      fs.writeFileSync(path.join(config.outputAbsolute,'index.html'), output);
+    } else if (dest.slice(0, 6) === 'readme') {
+      fs.writeFileSync(path.join(config.outputAbsolute, 'index.html'), output);
     }
     fs.writeFileSync(path.join(config.outputAbsolute, dest), output);
     console.log(path.join(config.outputAbsolute, dest));
   }
 
-
-  if(config.all) {
+  if (config.all) {
     data = {
       all: all,
       md: false,
