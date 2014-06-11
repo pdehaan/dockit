@@ -20,3 +20,7 @@ Dockit source is [available on github](https://github.com/diffsky/dockit)
 
 Run inside a directory with a `.dockit.json[5]` file or pass the config location as a command
 line option, see `dockit --help`
+
+---
+
+Dockit logo designed by [Ilsur Aptukov](http://thenounproject.com/Ilsur) from the [Noun Project](http://thenounproject.com/) :: Creative Commons – Attribution (CC BY 3.0)
