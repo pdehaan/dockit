@@ -1,0 +1,33 @@
+<div class="nav transformer nav-hide">
+
+  <span class="ctrl-pages ctrl ctrl-hide transformer">pages</span>
+  <span class="ctrl-files ctrl ctrl-hide transformer">files</span>
+  <% if(showall) { %>
+  <a href="<% if(index) { %><%- index %><% } else {%>all.html<% } %>?menu=1<%- allHash %>"><span class="ctrl-all ctrl ctrl-hide <% if(onAll) { %>active<% } %> transformer">∞</span></a>
+  <% } %>
+
+  <ol id="files" class="menu hidden">
+    <% files.forEach(function(file){ %>
+    <a class="nav-item nav-<%= file.key %>" href="<%= file.key %>.html?menu=1&amp;file=1">
+      <li <% if(locals.current === file.key){ %>class="active"<% } %>>
+        <span class="dir"><%= file.dir %></span>
+        <span class="file"><%= file.file %></span>
+      </li>
+    </a>
+    <% }) %>
+  </ol>
+
+  <% if (pages) { %>
+  <ol id="pages" class="menu">
+    <% pages.forEach(function(page){ %>
+    <a class="nav-item nav-<%= page.key %>-s<%= page.section %>" href="<% if(showall){ %><%= all %><% }else{ %><%= page.key %>.html<% } %>?menu=1#<%= page.key %>-s<%= page.section %>">
+      <li class="h<%= page.h %>" ><%= page.page %></li>
+    </a>
+    <% }) %>
+  </ol>
+  <% } %>
+
+  <p id="generated">generated <%= generated %></p>
+</div>
+
+

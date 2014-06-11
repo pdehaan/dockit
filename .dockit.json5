@@ -41,7 +41,7 @@
 // *allHash*: add an optional hash to the url for the all page (to link to an anchor)
 //
 {
-  "project": "ockit",
+  "project": "Dockit",
   "github" : {
     "url" : "https://github.com/diffsky/dockit",
     "text" : "github"
@@ -64,7 +64,7 @@
   },
   "ctypes": ["BRACKET_BANG"],
   "ignores": [
-    "/* jshint"
+    "/*eslint"
   ],
   "allHash" : "#readme_md-s1"
 }

@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+/*eslint no-process-exit:0 */
+'use strict';
 
 var program = require('commander'),
     dockit = require('../'),
@@ -48,7 +50,7 @@ config.output = config.output || 'docs';
 config.outputAbsolute = path.join(config.configDir, config.output);
 config.github = config.github || {};
 if(config.github.url !== undefined && config.github.text === undefined){
-  config.github.text = "github";
+  config.github.text = 'github';
 }
 if(config.all !== false){
   config.all = true;

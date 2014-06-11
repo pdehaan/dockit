@@ -1,3 +1,4 @@
+'use strict';
 // ## Dockit Lib
 // Require the necessary libraries.
 // Actual file parsing for code and comments is handled by the [noddocco](https://github.com/diffsky/noddocco) lib.
@@ -13,18 +14,21 @@
 // All templates from `templates` directory are compiled into the `dust.cache` via [duster](https://github.com/diffsky/noddocco)
 // - preserving any whitespace in the templates by using a format optimizer.
 
-/* jshint loopfunc: true, unused: false */
-var noddocco = require("noddocco"),
-path = require('path'),
-fs = require('fs'),
-duster = require('duster'),
-dust = duster.dust,
-ncp = require('ncp').ncp,
-marked = require('marked'),
-hl = require('highlight.js'),
-expand = require('glob-expand'),
-mkdirp = require('mkdirp');
+var noddocco = require('noddocco');
+var path = require('path');
+var fs = require('fs');
+var ncp = require('ncp').ncp;
+var hl = require('highlight.js');
+var expand = require('glob-expand');
+var mkdirp = require('mkdirp');
 
+var ejstpl = require('ejstpl');
+var tpl = ejstpl({
+  cwd: path.join(__dirname, 'templates')
+});
+
+/* dockit note version 0.2.10 started automatically addings id attributes to headings which broke dockit's parsing */
+var marked = require('marked');
 marked.setOptions({
   gfm: true,
   pedantic: false,
@@ -36,9 +40,6 @@ marked.setOptions({
     return hl.highlight(lang, code).value;
   }
 });
-
-dust.optimizers.format = function(ctx, node) {return node;};
-duster.prime(path.join(__dirname, 'templates'));
 
 // ### Process files and generate documentation
 // A config object passed to the dockit function contains a glob match for all the
@@ -59,7 +60,7 @@ var blocks = {}, pages = {}, files = [],
 dir, fileRepo, key, comment, page, details, ext, input, foundsection;
 
 function anchorize(match, p1, p2, offset, string){
-  return '</div><div id="'+key+'-s'+(foundsection++)+'" class="section md"><h'+p1+'>'+p2+'</h'+p1+'>';
+  return '</div><div id="' + key + '-s' + (foundsection++) + '" class="section md"><h' + p1 + '>' + p2 + '</h' + p1 + '>';
 }
 
 module.exports = function(config) {
@@ -96,7 +97,7 @@ module.exports = function(config) {
     ext = path.extname(file).slice(1);
     input = fs.readFileSync(file, 'utf8');
     fileRepo = path.relative(process.cwd(), file);
-    key = fileRepo.replace(/\//g, "_").replace(/\./g, "_").toLowerCase();
+    key = fileRepo.replace(/\//g, '_').replace(/\./g, '_').toLowerCase();
     dir = path.dirname(path.relative(process.cwd(), file)).toLowerCase();
     if (dir === '.') {
       dir = '';
@@ -137,24 +138,29 @@ module.exports = function(config) {
       opts.encode = false;
       opts.ignores = config.ignores || {};
       noddocco.process(input, opts, function (err, noddoccoData) {
-        blocks[key] = {
-          file: file,
-          fileRepo: fileRepo,
-          key: key,
-          blocks: noddoccoData
-        };
-        for (var i in noddoccoData){
-          comment = noddoccoData[i].comments;
-          page = comment.match(/<h([1-3])>(.*)<\/h[1-3]>/i);
-          if(page) {
-            details = {
-              page: page[2],
-              section: (+i + 1),
-              h: page[1],
-              key: key
-            };
-            pages[key] = pages[key] || [];
-            pages[key].push(details);
+        if (err) {
+          console.log(err);
+        } else {
+          blocks[key] = {
+            file: file,
+            fileRepo: fileRepo,
+            key: key,
+            blocks: noddoccoData
+          };
+          for (var i in noddoccoData){
+            comment = noddoccoData[i].comments;
+            page = comment.match(/<h([1-3])>(.*)<\/h[1-3]>/i);
+            // console.log(page);
+            if(page) {
+              details = {
+                page: page[2],
+                section: (+i + 1),
+                h: page[1],
+                key: key
+              };
+              pages[key] = pages[key] || [];
+              pages[key].push(details);
+            }
           }
         }
       });
@@ -182,7 +188,7 @@ module.exports = function(config) {
 
   console.log('writing...');
   config.project = config.project || 'dockit generated docs';
-  var all, dest,
+  var all, dest, data, output,
       generated = new Date();
 
   all = 'all.html';
@@ -193,9 +199,9 @@ module.exports = function(config) {
 
   for (i in blocks){
     dest = blocks[i].key + '.html';
-
-    dust.render('file', {
-      md: blocks[i].md,
+    data = {
+      onAll: false,
+      md: blocks[i].md || false,
       title: config.project,
       index: config.index,
       github: config.github,
@@ -207,21 +213,23 @@ module.exports = function(config) {
       favicon: config.favicon,
       generated: generated,
       pages: displaypages,
-      data: blocks[i]},
-      function(err, output){
-        if(dest === config.index) {
-          dest = 'index.html';
-        } else if (dest.slice(0, 6) === 'readme'){
-          fs.writeFileSync(path.join(config.outputAbsolute,'index.html'), output);
-        }
-        fs.writeFileSync(path.join(config.outputAbsolute, dest), output);
-        console.log(path.join(config.output, dest));
-      });
+      data: [blocks[i]]
+    };
+    output = tpl.main(data);
+    if(dest === config.index) {
+      dest = 'index.html';
+    } else if (dest.slice(0, 6) === 'readme'){
+      fs.writeFileSync(path.join(config.outputAbsolute,'index.html'), output);
+    }
+    fs.writeFileSync(path.join(config.outputAbsolute, dest), output);
+    console.log(path.join(config.outputAbsolute, dest));
   }
 
+
   if(config.all) {
-    dust.render('file', {
+    data = {
       all: all,
+      md: false,
       allHash: config.allHash,
       onAll: true,
       title: config.project,
@@ -232,11 +240,12 @@ module.exports = function(config) {
       favicon: config.favicon,
       generated: generated,
       pages: displaypages,
-      data: orderedblocks},
-      function(err, output){
-        fs.writeFileSync(path.join(config.outputAbsolute, all), output);
-        console.log(path.join(config.output, all));
-      });
+      data: orderedblocks
+    };
+    output = tpl.main(data);
+    fs.writeFileSync(path.join(config.outputAbsolute, all), output);
+    console.log(path.join(config.output, all));
   }
+
   console.log('...done!');
 };

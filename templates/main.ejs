@@ -1,0 +1,31 @@
+<% include header %>
+
+<table class="dockit<% if(md && !all) { %> single<% } %>">
+<% data.forEach(function(entry){ %>
+<% if(entry.block) { %>
+<tr>
+  <td class="comments">
+    <% if(github.url) { %><a class="github" href="<%- github.url %>/blob/master/<%- entry.fileRepo %>"><%= github.text %></a><% } %>
+    <div class="con"><%- entry.block %></div>
+  </td>
+  <% if(onAll) { %>
+  <td class="code">
+    <div class="con"><pre><code></pre></code></div>
+  </td>
+  <% } %>
+</tr>
+<% } %>
+<% if(entry.blocks) entry.blocks.forEach(function(block){ %>
+<tr id="<%- entry.key %>-s<%- block.section %>" class="section">
+  <td class="comments">
+    <% if(github.url && block.section === 1) { %><a class="github" href="<%- github.url %>/blob/master/<%- entry.fileRepo %>"><%= github.text %></a><% } %>
+    <div class="con"><%- block.comments %></div>
+  </td>
+  <td class="code">
+    <div class="con"><pre class="hifile"><code><%- block.code %></pre></code></div>
+  </td>
+</tr>
+<% }) %>
+<% }) %>
+</table>
+<% include footer %>

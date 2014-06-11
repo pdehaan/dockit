@@ -5,17 +5,11 @@
   <link rel="stylesheet" type="text/css" href="__assets/main.css">
   <script src="__assets/libs.js"></script>
   <script src="__assets/main.js"></script>
-  {?favicon}<link rel="shortcut icon" href="__assets/{favicon}">{/favicon}
-  <title>{title}</title>
+  <% if(locals.favicon) { %><link rel="shortcut icon" href="__assets/<%= favicon %>"><% } %>
+  <title><%= title %></title>
 </head>
 <body>
 <div id="container">
   <div class="docs docs-full transformer">
     <span class="ctrl ctrl-nav transformer" >☰</span>
-    {^md}<span class="ctrl-code ctrl active">code</span>{/md}
-    {+content}{/content}
-  </div>
-</div>
-{>nav/}
-</body>
-</html>
+    <% if(!md) { %><span class="ctrl-code ctrl active">code</span><% } %>
